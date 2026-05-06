@@ -13,7 +13,7 @@ class NLPServiceAdapter:
     def __init__(self):
 
         api_key = os.getenv(
-            "GEMINI_API_KEY"
+            "TU API KEY"
         )
 
         self.gemini_available = False

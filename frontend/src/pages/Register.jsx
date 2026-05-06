@@ -1,115 +1,70 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
-import {
-createUserWithEmailAndPassword
-}
-from "firebase/auth";
-
-import { auth } from "../app/firebase";
-
 import "./Auth.css";
 
+export default function Register() {
 
-export default function Register(){
+  const navigate = useNavigate();
+  const [email, setEmail]       = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading]   = useState(false);
 
-const navigate=useNavigate()
+  const registerUser = async (e) => {
+    e.preventDefault();
+    setLoading(true);
 
-const[email,setEmail]=useState("")
-const[password,setPassword]=useState("")
-const[loading,setLoading]=useState(false)
+    try {
+      // Llama a TU backend, no a Firebase directamente
+      const res = await fetch("http://localhost:5000/api/auth/register", {
+        method:  "POST",
+        headers: { "Content-Type": "application/json" },
+        body:    JSON.stringify({ email, password })
+      });
 
+      const data = await res.json();
 
+      if (!data.success) {
+        alert(data.error || "Error al crear usuario");
+        return;
+      }
 
-const registerUser=async(e)=>{
+      alert("Usuario creado correctamente");
+      navigate("/");
 
-e.preventDefault()
+    } catch (error) {
+      alert("Error de conexión con el servidor");
+      console.error(error);
 
-setLoading(true)
+    } finally {
+      setLoading(false);
+    }
+  };
 
-try{
+  return (
+    <div className="auth-page">
+      <form onSubmit={registerUser} className="auth-card">
 
-await createUserWithEmailAndPassword(
-auth,
-email,
-password
-)
+        <h1>Crear Cuenta</h1>
 
-alert(
-"Usuario creado"
-)
+        <input
+          type="email"
+          placeholder="Correo"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
 
-navigate("/")
+        <input
+          type="password"
+          placeholder="Contraseña"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
 
-}
-catch(error){
+        <button disabled={loading}>
+          {loading ? "Creando..." : "Registrarse"}
+        </button>
 
-alert(
-error.message
-)
-
-}
-finally{
-
-setLoading(false)
-
-}
-
-}
-
-
-
-return(
-
-<div className="auth-page">
-
-<form
-onSubmit={registerUser}
-className="auth-card"
->
-
-<h1>
-Crear Cuenta
-</h1>
-
-<input
-type="email"
-placeholder="Correo"
-value={email}
-onChange={(e)=>
-setEmail(e.target.value)
-}
-/>
-
-
-<input
-type="password"
-placeholder="Contraseña"
-value={password}
-onChange={(e)=>
-setPassword(e.target.value)
-}
-/>
-
-
-<button
-disabled={loading}
->
-
-{
-loading
-?
-"Creando..."
-:
-"Registrarse"
-}
-
-</button>
-
-</form>
-
-</div>
-
-)
-
+      </form>
+    </div>
+  );
 }

@@ -1,80 +1,106 @@
 from flask import Blueprint, jsonify, request
+from datetime import datetime, timezone
 
-from src.config.firebase_config import firebase_auth
-from src.infrastructure.database.FirestoreRepository import FirestoreRepository
+from src.config.firebase_config import firebase_auth, db
 
-
-router = Blueprint(
-    "auth",
-    __name__,
-    url_prefix="/api/auth"
-)
-
-repo = FirestoreRepository()
+router = Blueprint("auth", __name__, url_prefix="/api/auth")
 
 
-@router.route(
-    "/me",
-    methods=["GET"]
-)
-def auth_me():
+# =========================================================
+# REGISTER — crea en Auth + Firestore en un solo paso
+# =========================================================
+@router.route("/register", methods=["POST"])
+def register():
 
-    auth_header = request.headers.get(
-        "Authorization"
-    )
+    data = request.get_json()
 
-    if not auth_header:
-        return jsonify({
-            "success": False,
-            "message": "Token no enviado"
-        }), 401
+    if not data:
+        return jsonify({"success": False, "message": "Datos no enviados"}), 400
 
-    token = auth_header.replace(
-        "Bearer ",
-        ""
-    ).strip()
+    email    = data.get("email", "").strip()
+    password = data.get("password", "").strip()
+
+    if not email or not password:
+        return jsonify({"success": False, "message": "Email y password requeridos"}), 400
 
     try:
-        # Añadimos clock_skew_seconds para tolerar pequeñas diferencias de tiempo
-        decoded_token = firebase_auth.verify_id_token(
-            token,
-            check_revoked=False,
-            clock_skew_seconds=10  # <--- Esto da un margen de 10 segundos
+        # 1. Crear en Firebase Authentication
+        auth_user = firebase_auth.create_user(
+            email=email,
+            password=password
         )
 
-        uid = decoded_token["uid"]
+        uid = auth_user.uid
+        now = datetime.now(timezone.utc)
 
-        email = decoded_token.get(
-            "email",
-            ""
-        )
+        # 2. Guardar en Firestore — colección users, doc ID = uid
+        user_data = {
+            "uid":       uid,
+            "email":     email,
+            "name":      email,   # nombre = correo
+            "role":      "student",
+            "createdAt": now,
+            "updatedAt": now
+        }
 
-        name = decoded_token.get(
-            "name",
-            email
-        )
+        db.collection("users").document(uid).set(user_data)
 
-        user = repo.create_user_if_not_exists(
-            {
-                "uid": uid,
-                "email": email,
-                "name": name
-            }
-        )
+        print(f"✅ Usuario guardado en Firestore: {uid}")
 
         return jsonify({
             "success": True,
-            "user": user
-        }), 200
+            "message": "Usuario creado",
+            "uid":     uid,
+            "email":   email
+        }), 201
 
     except Exception as e:
+        print("REGISTER ERROR:", str(e))
+        return jsonify({"success": False, "error": str(e)}), 400
 
-        print(
-            "Firebase verify error:",
-            str(e)
+
+# =========================================================
+# ME — valida token y retorna/crea usuario en Firestore
+# =========================================================
+@router.route("/me", methods=["GET"])
+def auth_me():
+
+    auth_header = request.headers.get("Authorization", "")
+    token = auth_header.replace("Bearer ", "").strip()
+
+    if not token:
+        return jsonify({"success": False, "message": "Token no enviado"}), 401
+
+    try:
+        decoded = firebase_auth.verify_id_token(
+            token,
+            check_revoked=False,
+            clock_skew_seconds=10
         )
 
-        return jsonify({
-            "success": False,
-            "error": str(e)
-        }), 401
+        uid   = decoded["uid"]
+        email = decoded.get("email", "")
+
+        user_ref = db.collection("users").document(uid)
+        user_doc = user_ref.get()
+
+        if user_doc.exists:
+            user_data = user_doc.to_dict()
+        else:
+            # Si por alguna razón no existe, lo crea
+            now = datetime.now(timezone.utc)
+            user_data = {
+                "uid":       uid,
+                "email":     email,
+                "name":      email,
+                "role":      "student",
+                "createdAt": now,
+                "updatedAt": now
+            }
+            user_ref.set(user_data)
+
+        return jsonify({"success": True, "user": user_data}), 200
+
+    except Exception as e:
+        print("AUTH ME ERROR:", str(e))
+        return jsonify({"success": False, "error": str(e)}), 401

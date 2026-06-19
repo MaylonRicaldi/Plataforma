@@ -1,37 +1,209 @@
-.auth-page{
-min-height:100vh;
-display:flex;
-justify-content:center;
-align-items:center;
-background:#eef2ff;
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
 }
+
+.auth-page{
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:2rem;
+  background:#f0f9ff;
+  font-family:'Nunito',sans-serif;
+  position:relative;
+  overflow:hidden;
+}
+
+/* Fondo superior pastel */
+.auth-page::before{
+  content:'';
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  height:260px;
+  background:
+  linear-gradient(
+    135deg,
+    #60a5fa 0%,
+    #38bdf8 45%,
+    #67e8f9 100%
+  );
+
+  border-radius:
+  0 0 60% 60% /
+  0 0 60px 60px;
+
+  z-index:0;
+}
+
+/* Decoración */
+.auth-page::after{
+  content:'';
+  position:absolute;
+  width:320px;
+  height:320px;
+  border-radius:50%;
+
+  background:
+  radial-gradient(
+    circle,
+    rgba(56,189,248,.18) 0%,
+    transparent 70%
+  );
+
+  bottom:-80px;
+  right:-60px;
+
+  z-index:0;
+}
+
+/* Card */
 
 .auth-card{
-background:white;
-padding:40px;
-border-radius:20px;
-width:380px;
-display:flex;
-flex-direction:column;
-gap:20px;
-box-shadow:0 8px 30px rgba(0,0,0,.08);
+  width:100%;
+  max-width:430px;
+
+  background:white;
+
+  padding:2.7rem 2.3rem;
+
+  border-radius:30px;
+
+  position:relative;
+  z-index:2;
+
+  display:flex;
+  flex-direction:column;
+  gap:18px;
+
+  box-shadow:
+  0 10px 35px rgba(14,165,233,.15),
+  0 4px 10px rgba(0,0,0,.05);
+
+  border-top:6px solid #38bdf8;
 }
+
+/* Título */
 
 .auth-card h1{
-text-align:center;
+  text-align:center;
+
+  font-family:'Fredoka One',cursive;
+
+  font-size:36px;
+
+  color:#0f172a;
+
+  margin-bottom:10px;
 }
+
+/* Inputs */
 
 .auth-card input{
-padding:14px;
-border:1px solid #ddd;
-border-radius:12px;
+
+  width:100%;
+
+  padding:16px 18px;
+
+  border-radius:18px;
+
+  border:2px solid #dbeafe;
+
+  background:#f8fafc;
+
+  font-size:15px;
+
+  font-family:'Nunito',sans-serif;
+
+  font-weight:700;
+
+  outline:none;
+
+  transition:
+  .2s border,
+  .2s box-shadow,
+  .2s background;
 }
 
+.auth-card input:focus{
+
+  border-color:#38bdf8;
+
+  background:white;
+
+  box-shadow:
+  0 0 0 4px rgba(56,189,248,.15);
+}
+
+.auth-card input::placeholder{
+  color:#94a3b8;
+}
+
+/* Botón */
+
 .auth-card button{
-background:#2563eb;
-color:white;
-border:none;
-padding:15px;
-border-radius:12px;
-font-weight:bold;
+
+  margin-top:10px;
+
+  border:none;
+
+  padding:16px;
+
+  border-radius:18px;
+
+  background:
+  linear-gradient(
+    135deg,
+    #38bdf8 0%,
+    #60a5fa 100%
+  );
+
+  color:white;
+
+  font-size:18px;
+
+  font-family:'Fredoka One',cursive;
+
+  cursor:pointer;
+
+  transition:
+  transform .15s,
+  opacity .2s,
+  box-shadow .2s;
+
+  box-shadow:
+  0 8px 22px rgba(56,189,248,.35);
+}
+
+.auth-card button:hover{
+
+  transform:translateY(-2px);
+
+  opacity:.95;
+}
+
+.auth-card button:disabled{
+
+  opacity:.7;
+
+  cursor:not-allowed;
+
+  transform:none;
+}
+
+/* Responsive */
+
+@media(max-width:768px){
+
+  .auth-card{
+    padding:2rem 1.5rem;
+  }
+
+  .auth-card h1{
+    font-size:30px;
+  }
+
 }

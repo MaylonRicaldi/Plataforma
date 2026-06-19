@@ -24,12 +24,11 @@ export default function Login() {
         await signInWithEmailAndPassword(auth, email, password);
       const token =
         await userCredential.user.getIdToken(true);
-      await api.get("/auth/me", {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      //await api.get("/auth/me", {
+      // headers: { Authorization: `Bearer ${token}` }
+      //});
       navigate("/home");
     } catch(err) {
-      console.error(err);
       setError("Credenciales incorrectas");
     } finally {
       setLoading(false);
@@ -172,7 +171,9 @@ export default function Login() {
 
         <form onSubmit={login}>
 
+          <label htmlFor="login-email" style={{display:"none"}}>Correo electrónico</label>
           <input
+            id="login-email"
             type="email"
             placeholder="Correo"
             value={email}
@@ -180,7 +181,9 @@ export default function Login() {
             required
           />
 
+          <label htmlFor="login-password" style={{display:"none"}}>Contraseña</label>
           <input
+            id="login-password"
             type="password"
             placeholder="Contraseña"
             value={password}

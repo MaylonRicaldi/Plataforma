@@ -1,0 +1,164 @@
+
+.progress-page {
+  min-height: 100vh;
+  background: #f0f9ff;
+  font-family: 'Nunito', sans-serif;
+  padding: 2rem 2rem 4rem;
+}
+
+.prog-header {
+  text-align: center;
+  margin-bottom: 2rem;
+  padding: 2.5rem 1rem 1.5rem;
+  background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+  border-radius: 24px;
+  color: white;
+}
+
+.prog-header h1 {
+  font-family: 'Fredoka One', cursive;
+  font-size: 32px;
+  margin-bottom: 6px;
+}
+
+.prog-header p { font-size: 15px; opacity: 0.9; font-weight: 700; }
+
+.prog-kpis {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+  margin-bottom: 2rem;
+}
+
+.prog-kpi {
+  background: white;
+  border-radius: 18px;
+  padding: 1.4rem 1rem;
+  text-align: center;
+  box-shadow: 0 4px 16px rgba(99,102,241,0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.kpi-value {
+  font-family: 'Fredoka One', cursive;
+  font-size: 28px;
+  color: #4f46e5;
+  text-transform: capitalize;
+}
+
+.kpi-label { font-size: 13px; color: #6b7280; font-weight: 700; }
+
+.prog-section {
+  background: white;
+  border-radius: 20px;
+  padding: 1.6rem 1.8rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+}
+
+.prog-section h2 {
+  font-family: 'Fredoka One', cursive;
+  font-size: 20px;
+  color: #1e1b4b;
+  margin-bottom: 1.2rem;
+}
+
+/* Bars */
+.prog-bars { display: flex; flex-direction: column; gap: 12px; }
+
+.bar-row { display: flex; align-items: center; gap: 12px; }
+
+.bar-label { width: 70px; font-weight: 800; font-size: 14px; text-transform: capitalize; }
+
+.bar-track {
+  flex: 1;
+  height: 14px;
+  background: #f1f5f9;
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.bar-fill { height: 100%; border-radius: 99px; transition: width 0.6s ease; min-width: 4px; }
+.bar-bajo  { background: linear-gradient(90deg, #60a5fa, #93c5fd); }
+.bar-medio { background: linear-gradient(90deg, #34d399, #6ee7b7); }
+.bar-alto  { background: linear-gradient(90deg, #f97316, #fb923c); }
+
+.bar-pct { font-size: 13px; font-weight: 700; color: #6b7280; min-width: 80px; text-align: right; }
+
+/* Bloom grid */
+.bloom-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 12px;
+}
+
+.bloom-card {
+  background: #fafafa;
+  border-radius: 14px;
+  padding: 1rem;
+  border-top: 4px solid #e2e8f0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.bloom-num  { font-family: 'Fredoka One', cursive; font-size: 26px; }
+.bloom-name { font-size: 13px; font-weight: 800; color: #374151; }
+.bloom-count{ font-size: 12px; color: #9ca3af; font-weight: 700; margin-bottom: 4px; }
+
+.bloom-bar-track {
+  height: 6px;
+  background: #e5e7eb;
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.bloom-bar-fill { height: 100%; border-radius: 99px; transition: width 0.5s; min-width: 3px; }
+
+/* Timeline */
+.prog-timeline { display: flex; flex-direction: column; gap: 10px; }
+
+.timeline-item { display: flex; align-items: center; gap: 12px; }
+
+.tl-dot {
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.tl-dot-bajo  { background: #60a5fa; }
+.tl-dot-medio { background: #34d399; }
+.tl-dot-alto  { background: #f97316; }
+
+.tl-body { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+
+.tl-badge {
+  font-size: 12px;
+  font-weight: 800;
+  padding: 4px 10px;
+  border-radius: 20px;
+  text-transform: capitalize;
+}
+.tl-bajo  { background: #dbeafe; color: #1d4ed8; }
+.tl-medio { background: #d1fae5; color: #065f46; }
+.tl-alto  { background: #ffedd5; color: #9a3412; }
+
+.tl-bloom { font-size: 12px; color: #7c3aed; font-weight: 700; }
+.tl-fecha { font-size: 12px; color: #9ca3af; font-weight: 600; margin-left: auto; }
+
+.prog-loading, .prog-error {
+  text-align: center;
+  margin-top: 4rem;
+  font-size: 18px;
+  font-weight: 700;
+  color: #6b7280;
+}
+
+.prog-empty {
+  text-align: center;
+  padding: 3rem;
+  color: #6b7280;
+  font-size: 16px;
+  font-weight: 700;
+}

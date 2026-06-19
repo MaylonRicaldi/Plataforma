@@ -1,0 +1,755 @@
+2026-06-19 10:42:46 [INFO] werkzeug: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2026-06-19 10:42:46 [INFO] werkzeug: [33mPress CTRL+C to quit[0m
+2026-06-19 10:53:26 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 10:53:26] "OPTIONS /api/auth/register HTTP/1.1" 200 -
+2026-06-19 10:53:26 [INFO] src.infrastructure.adapters.inbound.controllers.auth_controller: Registrando nuevo usuario: ric***
+2026-06-19 10:53:28 [WARNING] src.infrastructure.adapters.inbound.controllers.auth_controller: Registro fallido: email ya existe - ricaldi2323@gmail.com
+2026-06-19 10:53:28 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 10:53:28] "[31m[1mPOST /api/auth/register HTTP/1.1[0m" 409 -
+2026-06-19 10:53:32 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 10:53:32] "OPTIONS /api/auth/register HTTP/1.1" 200 -
+2026-06-19 10:53:32 [INFO] src.infrastructure.adapters.inbound.controllers.auth_controller: Registrando nuevo usuario: ric***
+2026-06-19 10:53:35 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 10:53:35] "[35m[1mPOST /api/auth/register HTTP/1.1[0m" 201 -
+2026-06-19 10:55:16 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 10:55:16] "OPTIONS /api/progress?userId=0uqhtG0lb8U6kpeDERB8isQR0Mh1 HTTP/1.1" 200 -
+2026-06-19 10:55:16 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 10:55:16] "OPTIONS /api/progress?userId=0uqhtG0lb8U6kpeDERB8isQR0Mh1 HTTP/1.1" 200 -
+2026-06-19 10:55:18 [INFO] src.infrastructure.adapters.inbound.middlewares.auth_middleware: Auth exitoso: uid=0uqhtG0lb8U6kpeDERB8isQR0Mh1 endpoint=progress.analizar_progreso
+2026-06-19 10:55:18 [ERROR] src.infrastructure.adapters.inbound.controllers.progress_controller: analizar_progreso: error - 400 The query requires an index. You can create it here: https://console.firebase.google.com/v1/r/project/proyecto01-7b3d9/firestore/indexes?create_composite=ClJwcm9qZWN0cy9wcm95ZWN0bzAxLTdiM2Q5L2RhdGFiYXNlcy8oZGVmYXVsdCkvY29sbGVjdGlvbkdyb3Vwcy9xdWVzdGlvbnMvaW5kZXhlcy9fEAEaCgoGdXNlcklkEAEaDQoJY3JlYXRlZEF0EAIaDAoIX19uYW1lX18QAg
+Traceback (most recent call last):
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\api_core\grpc_helpers.py", line 149, in error_remapped_callable
+    return _StreamingResponseIterator(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\api_core\grpc_helpers.py", line 71, in __init__
+    self._stored_first_result = next(self._wrapped)
+                                ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\grpc\_channel.py", line 538, in __next__
+    return self._next()
+           ^^^^^^^^^^^^
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\grpc\_channel.py", line 956, in _next
+    raise self
+grpc._channel._MultiThreadedRendezvous: <_MultiThreadedRendezvous of RPC that terminated with:
+	status = StatusCode.FAILED_PRECONDITION
+	details = "The query requires an index. You can create it here: https://console.firebase.google.com/v1/r/project/proyecto01-7b3d9/firestore/indexes?create_composite=ClJwcm9qZWN0cy9wcm95ZWN0bzAxLTdiM2Q5L2RhdGFiYXNlcy8oZGVmYXVsdCkvY29sbGVjdGlvbkdyb3Vwcy9xdWVzdGlvbnMvaW5kZXhlcy9fEAEaCgoGdXNlcklkEAEaDQoJY3JlYXRlZEF0EAIaDAoIX19uYW1lX18QAg"
+	debug_error_string = "UNKNOWN:Error received from peer ipv4:64.233.190.95:443 {grpc_status:9, grpc_message:"The query requires an index. You can create it here: https://console.firebase.google.com/v1/r/project/proyecto01-7b3d9/firestore/indexes?create_composite=ClJwcm9qZWN0cy9wcm95ZWN0bzAxLTdiM2Q5L2RhdGFiYXNlcy8oZGVmYXVsdCkvY29sbGVjdGlvbkdyb3Vwcy9xdWVzdGlvbnMvaW5kZXhlcy9fEAEaCgoGdXNlcklkEAEaDQoJY3JlYXRlZEF0EAIaDAoIX19uYW1lX18QAg"}"
+>
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\ASUS\PlataformaLIA\backend\src\infrastructure\adapters\inbound\controllers\progress_controller.py", line 37, in analizar_progreso
+    result  = service.analizar(user_id=user_id)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\PlataformaLIA\backend\src\application\services\AnalizarProgresoService.py", line 10, in analizar
+    return self.use_case.execute(user_id=user_id)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\PlataformaLIA\backend\src\application\use_cases\AnalizarProgresoUseCase.py", line 15, in execute
+    return self.analytics.analizar_progreso(user_id=user_id)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\PlataformaLIA\backend\src\infrastructure\adapters\outbound\analytics\AnalyticsAdapter.py", line 16, in analizar_progreso
+    questions = self.repo.get_questions_by_user(user_id)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\PlataformaLIA\backend\src\infrastructure\adapters\outbound\database\FirestoreRepository.py", line 30, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\PlataformaLIA\backend\src\infrastructure\adapters\outbound\database\FirestoreRepository.py", line 198, in get_questions_by_user
+    for doc in docs:
+               ^^^^
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\cloud\firestore_v1\stream_generator.py", line 58, in __next__
+    return self._generator.__next__()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\cloud\firestore_v1\query.py", line 423, in _make_stream
+    response_iterator, expected_prefix = self._get_stream_iterator(
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\cloud\firestore_v1\query.py", line 268, in _get_stream_iterator
+    response_iterator = self._client._firestore_api.run_query(
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\cloud\firestore_v1\services\firestore\client.py", line 1648, in run_query
+    response = rpc(
+               ^^^^
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\api_core\gapic_v1\method.py", line 128, in __call__
+    return wrapped_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\api_core\retry\retry_unary.py", line 294, in retry_wrapped_func
+    return retry_target(
+           ^^^^^^^^^^^^^
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\api_core\retry\retry_unary.py", line 156, in retry_target
+    next_sleep = _retry_error_helper(
+                 ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\api_core\retry\retry_base.py", line 216, in _retry_error_helper
+    raise final_exc from source_exc
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\api_core\retry\retry_unary.py", line 147, in retry_target
+    result = target()
+             ^^^^^^^^
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\api_core\timeout.py", line 130, in func_with_timeout
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\api_core\grpc_helpers.py", line 153, in error_remapped_callable
+    raise exceptions.from_grpc_error(exc) from exc
+google.api_core.exceptions.FailedPrecondition: 400 The query requires an index. You can create it here: https://console.firebase.google.com/v1/r/project/proyecto01-7b3d9/firestore/indexes?create_composite=ClJwcm9qZWN0cy9wcm95ZWN0bzAxLTdiM2Q5L2RhdGFiYXNlcy8oZGVmYXVsdCkvY29sbGVjdGlvbkdyb3Vwcy9xdWVzdGlvbnMvaW5kZXhlcy9fEAEaCgoGdXNlcklkEAEaDQoJY3JlYXRlZEF0EAIaDAoIX19uYW1lX18QAg
+2026-06-19 10:55:18 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 10:55:18] "[35m[1mGET /api/progress?userId=0uqhtG0lb8U6kpeDERB8isQR0Mh1 HTTP/1.1[0m" 500 -
+2026-06-19 10:55:19 [INFO] src.infrastructure.adapters.inbound.middlewares.auth_middleware: Auth exitoso: uid=0uqhtG0lb8U6kpeDERB8isQR0Mh1 endpoint=progress.analizar_progreso
+2026-06-19 10:55:19 [ERROR] src.infrastructure.adapters.inbound.controllers.progress_controller: analizar_progreso: error - 400 The query requires an index. You can create it here: https://console.firebase.google.com/v1/r/project/proyecto01-7b3d9/firestore/indexes?create_composite=ClJwcm9qZWN0cy9wcm95ZWN0bzAxLTdiM2Q5L2RhdGFiYXNlcy8oZGVmYXVsdCkvY29sbGVjdGlvbkdyb3Vwcy9xdWVzdGlvbnMvaW5kZXhlcy9fEAEaCgoGdXNlcklkEAEaDQoJY3JlYXRlZEF0EAIaDAoIX19uYW1lX18QAg
+Traceback (most recent call last):
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\api_core\grpc_helpers.py", line 149, in error_remapped_callable
+    return _StreamingResponseIterator(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\api_core\grpc_helpers.py", line 71, in __init__
+    self._stored_first_result = next(self._wrapped)
+                                ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\grpc\_channel.py", line 538, in __next__
+    return self._next()
+           ^^^^^^^^^^^^
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\grpc\_channel.py", line 956, in _next
+    raise self
+grpc._channel._MultiThreadedRendezvous: <_MultiThreadedRendezvous of RPC that terminated with:
+	status = StatusCode.FAILED_PRECONDITION
+	details = "The query requires an index. You can create it here: https://console.firebase.google.com/v1/r/project/proyecto01-7b3d9/firestore/indexes?create_composite=ClJwcm9qZWN0cy9wcm95ZWN0bzAxLTdiM2Q5L2RhdGFiYXNlcy8oZGVmYXVsdCkvY29sbGVjdGlvbkdyb3Vwcy9xdWVzdGlvbnMvaW5kZXhlcy9fEAEaCgoGdXNlcklkEAEaDQoJY3JlYXRlZEF0EAIaDAoIX19uYW1lX18QAg"
+	debug_error_string = "UNKNOWN:Error received from peer ipv4:64.233.190.95:443 {grpc_status:9, grpc_message:"The query requires an index. You can create it here: https://console.firebase.google.com/v1/r/project/proyecto01-7b3d9/firestore/indexes?create_composite=ClJwcm9qZWN0cy9wcm95ZWN0bzAxLTdiM2Q5L2RhdGFiYXNlcy8oZGVmYXVsdCkvY29sbGVjdGlvbkdyb3Vwcy9xdWVzdGlvbnMvaW5kZXhlcy9fEAEaCgoGdXNlcklkEAEaDQoJY3JlYXRlZEF0EAIaDAoIX19uYW1lX18QAg"}"
+>
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\ASUS\PlataformaLIA\backend\src\infrastructure\adapters\inbound\controllers\progress_controller.py", line 37, in analizar_progreso
+    result  = service.analizar(user_id=user_id)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\PlataformaLIA\backend\src\application\services\AnalizarProgresoService.py", line 10, in analizar
+    return self.use_case.execute(user_id=user_id)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\PlataformaLIA\backend\src\application\use_cases\AnalizarProgresoUseCase.py", line 15, in execute
+    return self.analytics.analizar_progreso(user_id=user_id)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\PlataformaLIA\backend\src\infrastructure\adapters\outbound\analytics\AnalyticsAdapter.py", line 16, in analizar_progreso
+    questions = self.repo.get_questions_by_user(user_id)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\PlataformaLIA\backend\src\infrastructure\adapters\outbound\database\FirestoreRepository.py", line 30, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\PlataformaLIA\backend\src\infrastructure\adapters\outbound\database\FirestoreRepository.py", line 198, in get_questions_by_user
+    for doc in docs:
+               ^^^^
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\cloud\firestore_v1\stream_generator.py", line 58, in __next__
+    return self._generator.__next__()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\cloud\firestore_v1\query.py", line 423, in _make_stream
+    response_iterator, expected_prefix = self._get_stream_iterator(
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\cloud\firestore_v1\query.py", line 268, in _get_stream_iterator
+    response_iterator = self._client._firestore_api.run_query(
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\cloud\firestore_v1\services\firestore\client.py", line 1648, in run_query
+    response = rpc(
+               ^^^^
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\api_core\gapic_v1\method.py", line 128, in __call__
+    return wrapped_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\api_core\retry\retry_unary.py", line 294, in retry_wrapped_func
+    return retry_target(
+           ^^^^^^^^^^^^^
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\api_core\retry\retry_unary.py", line 156, in retry_target
+    next_sleep = _retry_error_helper(
+                 ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\api_core\retry\retry_base.py", line 216, in _retry_error_helper
+    raise final_exc from source_exc
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\api_core\retry\retry_unary.py", line 147, in retry_target
+    result = target()
+             ^^^^^^^^
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\api_core\timeout.py", line 130, in func_with_timeout
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\api_core\grpc_helpers.py", line 153, in error_remapped_callable
+    raise exceptions.from_grpc_error(exc) from exc
+google.api_core.exceptions.FailedPrecondition: 400 The query requires an index. You can create it here: https://console.firebase.google.com/v1/r/project/proyecto01-7b3d9/firestore/indexes?create_composite=ClJwcm9qZWN0cy9wcm95ZWN0bzAxLTdiM2Q5L2RhdGFiYXNlcy8oZGVmYXVsdCkvY29sbGVjdGlvbkdyb3Vwcy9xdWVzdGlvbnMvaW5kZXhlcy9fEAEaCgoGdXNlcklkEAEaDQoJY3JlYXRlZEF0EAIaDAoIX19uYW1lX18QAg
+2026-06-19 10:55:19 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 10:55:19] "[35m[1mGET /api/progress?userId=0uqhtG0lb8U6kpeDERB8isQR0Mh1 HTTP/1.1[0m" 500 -
+2026-06-19 10:55:22 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 10:55:22] "OPTIONS /api/courses HTTP/1.1" 200 -
+2026-06-19 10:55:23 [INFO] src.infrastructure.adapters.inbound.middlewares.auth_middleware: Auth exitoso: uid=0uqhtG0lb8U6kpeDERB8isQR0Mh1 endpoint=courses.get_courses
+2026-06-19 10:55:23 [INFO] src.infrastructure.adapters.inbound.controllers.course_controller: Cursos listados: 8 encontrados
+2026-06-19 10:55:23 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 10:55:23] "GET /api/courses HTTP/1.1" 200 -
+2026-06-19 10:55:29 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 10:55:29] "OPTIONS /api/courses HTTP/1.1" 200 -
+2026-06-19 10:58:21 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 10:58:21] "OPTIONS /api/progress?userId=0uqhtG0lb8U6kpeDERB8isQR0Mh1 HTTP/1.1" 200 -
+2026-06-19 10:58:21 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 10:58:21] "OPTIONS /api/progress?userId=0uqhtG0lb8U6kpeDERB8isQR0Mh1 HTTP/1.1" 200 -
+2026-06-19 10:58:21 [INFO] src.infrastructure.adapters.inbound.middlewares.auth_middleware: Auth exitoso: uid=0uqhtG0lb8U6kpeDERB8isQR0Mh1 endpoint=progress.analizar_progreso
+2026-06-19 10:58:22 [ERROR] src.infrastructure.adapters.inbound.controllers.progress_controller: analizar_progreso: error - 400 The query requires an index. You can create it here: https://console.firebase.google.com/v1/r/project/proyecto01-7b3d9/firestore/indexes?create_composite=ClJwcm9qZWN0cy9wcm95ZWN0bzAxLTdiM2Q5L2RhdGFiYXNlcy8oZGVmYXVsdCkvY29sbGVjdGlvbkdyb3Vwcy9xdWVzdGlvbnMvaW5kZXhlcy9fEAEaCgoGdXNlcklkEAEaDQoJY3JlYXRlZEF0EAIaDAoIX19uYW1lX18QAg
+Traceback (most recent call last):
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\api_core\grpc_helpers.py", line 149, in error_remapped_callable
+    return _StreamingResponseIterator(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\api_core\grpc_helpers.py", line 71, in __init__
+    self._stored_first_result = next(self._wrapped)
+                                ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\grpc\_channel.py", line 538, in __next__
+    return self._next()
+           ^^^^^^^^^^^^
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\grpc\_channel.py", line 956, in _next
+    raise self
+grpc._channel._MultiThreadedRendezvous: <_MultiThreadedRendezvous of RPC that terminated with:
+	status = StatusCode.FAILED_PRECONDITION
+	details = "The query requires an index. You can create it here: https://console.firebase.google.com/v1/r/project/proyecto01-7b3d9/firestore/indexes?create_composite=ClJwcm9qZWN0cy9wcm95ZWN0bzAxLTdiM2Q5L2RhdGFiYXNlcy8oZGVmYXVsdCkvY29sbGVjdGlvbkdyb3Vwcy9xdWVzdGlvbnMvaW5kZXhlcy9fEAEaCgoGdXNlcklkEAEaDQoJY3JlYXRlZEF0EAIaDAoIX19uYW1lX18QAg"
+	debug_error_string = "UNKNOWN:Error received from peer ipv4:64.233.190.95:443 {grpc_status:9, grpc_message:"The query requires an index. You can create it here: https://console.firebase.google.com/v1/r/project/proyecto01-7b3d9/firestore/indexes?create_composite=ClJwcm9qZWN0cy9wcm95ZWN0bzAxLTdiM2Q5L2RhdGFiYXNlcy8oZGVmYXVsdCkvY29sbGVjdGlvbkdyb3Vwcy9xdWVzdGlvbnMvaW5kZXhlcy9fEAEaCgoGdXNlcklkEAEaDQoJY3JlYXRlZEF0EAIaDAoIX19uYW1lX18QAg"}"
+>
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\ASUS\PlataformaLIA\backend\src\infrastructure\adapters\inbound\controllers\progress_controller.py", line 37, in analizar_progreso
+    result  = service.analizar(user_id=user_id)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\PlataformaLIA\backend\src\application\services\AnalizarProgresoService.py", line 10, in analizar
+    return self.use_case.execute(user_id=user_id)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\PlataformaLIA\backend\src\application\use_cases\AnalizarProgresoUseCase.py", line 15, in execute
+    return self.analytics.analizar_progreso(user_id=user_id)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\PlataformaLIA\backend\src\infrastructure\adapters\outbound\analytics\AnalyticsAdapter.py", line 16, in analizar_progreso
+    questions = self.repo.get_questions_by_user(user_id)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\PlataformaLIA\backend\src\infrastructure\adapters\outbound\database\FirestoreRepository.py", line 30, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\PlataformaLIA\backend\src\infrastructure\adapters\outbound\database\FirestoreRepository.py", line 198, in get_questions_by_user
+    for doc in docs:
+               ^^^^
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\cloud\firestore_v1\stream_generator.py", line 58, in __next__
+    return self._generator.__next__()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\cloud\firestore_v1\query.py", line 423, in _make_stream
+    response_iterator, expected_prefix = self._get_stream_iterator(
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\cloud\firestore_v1\query.py", line 268, in _get_stream_iterator
+    response_iterator = self._client._firestore_api.run_query(
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\cloud\firestore_v1\services\firestore\client.py", line 1648, in run_query
+    response = rpc(
+               ^^^^
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\api_core\gapic_v1\method.py", line 128, in __call__
+    return wrapped_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\api_core\retry\retry_unary.py", line 294, in retry_wrapped_func
+    return retry_target(
+           ^^^^^^^^^^^^^
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\api_core\retry\retry_unary.py", line 156, in retry_target
+    next_sleep = _retry_error_helper(
+                 ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\api_core\retry\retry_base.py", line 216, in _retry_error_helper
+    raise final_exc from source_exc
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\api_core\retry\retry_unary.py", line 147, in retry_target
+    result = target()
+             ^^^^^^^^
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\api_core\timeout.py", line 130, in func_with_timeout
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\api_core\grpc_helpers.py", line 153, in error_remapped_callable
+    raise exceptions.from_grpc_error(exc) from exc
+google.api_core.exceptions.FailedPrecondition: 400 The query requires an index. You can create it here: https://console.firebase.google.com/v1/r/project/proyecto01-7b3d9/firestore/indexes?create_composite=ClJwcm9qZWN0cy9wcm95ZWN0bzAxLTdiM2Q5L2RhdGFiYXNlcy8oZGVmYXVsdCkvY29sbGVjdGlvbkdyb3Vwcy9xdWVzdGlvbnMvaW5kZXhlcy9fEAEaCgoGdXNlcklkEAEaDQoJY3JlYXRlZEF0EAIaDAoIX19uYW1lX18QAg
+2026-06-19 10:58:22 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 10:58:22] "[35m[1mGET /api/progress?userId=0uqhtG0lb8U6kpeDERB8isQR0Mh1 HTTP/1.1[0m" 500 -
+2026-06-19 10:58:22 [INFO] src.infrastructure.adapters.inbound.middlewares.auth_middleware: Auth exitoso: uid=0uqhtG0lb8U6kpeDERB8isQR0Mh1 endpoint=progress.analizar_progreso
+2026-06-19 10:58:23 [ERROR] src.infrastructure.adapters.inbound.controllers.progress_controller: analizar_progreso: error - 400 The query requires an index. You can create it here: https://console.firebase.google.com/v1/r/project/proyecto01-7b3d9/firestore/indexes?create_composite=ClJwcm9qZWN0cy9wcm95ZWN0bzAxLTdiM2Q5L2RhdGFiYXNlcy8oZGVmYXVsdCkvY29sbGVjdGlvbkdyb3Vwcy9xdWVzdGlvbnMvaW5kZXhlcy9fEAEaCgoGdXNlcklkEAEaDQoJY3JlYXRlZEF0EAIaDAoIX19uYW1lX18QAg
+Traceback (most recent call last):
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\api_core\grpc_helpers.py", line 149, in error_remapped_callable
+    return _StreamingResponseIterator(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\api_core\grpc_helpers.py", line 71, in __init__
+    self._stored_first_result = next(self._wrapped)
+                                ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\grpc\_channel.py", line 538, in __next__
+    return self._next()
+           ^^^^^^^^^^^^
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\grpc\_channel.py", line 956, in _next
+    raise self
+grpc._channel._MultiThreadedRendezvous: <_MultiThreadedRendezvous of RPC that terminated with:
+	status = StatusCode.FAILED_PRECONDITION
+	details = "The query requires an index. You can create it here: https://console.firebase.google.com/v1/r/project/proyecto01-7b3d9/firestore/indexes?create_composite=ClJwcm9qZWN0cy9wcm95ZWN0bzAxLTdiM2Q5L2RhdGFiYXNlcy8oZGVmYXVsdCkvY29sbGVjdGlvbkdyb3Vwcy9xdWVzdGlvbnMvaW5kZXhlcy9fEAEaCgoGdXNlcklkEAEaDQoJY3JlYXRlZEF0EAIaDAoIX19uYW1lX18QAg"
+	debug_error_string = "UNKNOWN:Error received from peer ipv4:64.233.190.95:443 {grpc_status:9, grpc_message:"The query requires an index. You can create it here: https://console.firebase.google.com/v1/r/project/proyecto01-7b3d9/firestore/indexes?create_composite=ClJwcm9qZWN0cy9wcm95ZWN0bzAxLTdiM2Q5L2RhdGFiYXNlcy8oZGVmYXVsdCkvY29sbGVjdGlvbkdyb3Vwcy9xdWVzdGlvbnMvaW5kZXhlcy9fEAEaCgoGdXNlcklkEAEaDQoJY3JlYXRlZEF0EAIaDAoIX19uYW1lX18QAg"}"
+>
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\ASUS\PlataformaLIA\backend\src\infrastructure\adapters\inbound\controllers\progress_controller.py", line 37, in analizar_progreso
+    result  = service.analizar(user_id=user_id)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\PlataformaLIA\backend\src\application\services\AnalizarProgresoService.py", line 10, in analizar
+    return self.use_case.execute(user_id=user_id)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\PlataformaLIA\backend\src\application\use_cases\AnalizarProgresoUseCase.py", line 15, in execute
+    return self.analytics.analizar_progreso(user_id=user_id)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\PlataformaLIA\backend\src\infrastructure\adapters\outbound\analytics\AnalyticsAdapter.py", line 16, in analizar_progreso
+    questions = self.repo.get_questions_by_user(user_id)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\PlataformaLIA\backend\src\infrastructure\adapters\outbound\database\FirestoreRepository.py", line 30, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\PlataformaLIA\backend\src\infrastructure\adapters\outbound\database\FirestoreRepository.py", line 198, in get_questions_by_user
+    for doc in docs:
+               ^^^^
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\cloud\firestore_v1\stream_generator.py", line 58, in __next__
+    return self._generator.__next__()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\cloud\firestore_v1\query.py", line 423, in _make_stream
+    response_iterator, expected_prefix = self._get_stream_iterator(
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\cloud\firestore_v1\query.py", line 268, in _get_stream_iterator
+    response_iterator = self._client._firestore_api.run_query(
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\cloud\firestore_v1\services\firestore\client.py", line 1648, in run_query
+    response = rpc(
+               ^^^^
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\api_core\gapic_v1\method.py", line 128, in __call__
+    return wrapped_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\api_core\retry\retry_unary.py", line 294, in retry_wrapped_func
+    return retry_target(
+           ^^^^^^^^^^^^^
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\api_core\retry\retry_unary.py", line 156, in retry_target
+    next_sleep = _retry_error_helper(
+                 ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\api_core\retry\retry_base.py", line 216, in _retry_error_helper
+    raise final_exc from source_exc
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\api_core\retry\retry_unary.py", line 147, in retry_target
+    result = target()
+             ^^^^^^^^
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\api_core\timeout.py", line 130, in func_with_timeout
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\api_core\grpc_helpers.py", line 153, in error_remapped_callable
+    raise exceptions.from_grpc_error(exc) from exc
+google.api_core.exceptions.FailedPrecondition: 400 The query requires an index. You can create it here: https://console.firebase.google.com/v1/r/project/proyecto01-7b3d9/firestore/indexes?create_composite=ClJwcm9qZWN0cy9wcm95ZWN0bzAxLTdiM2Q5L2RhdGFiYXNlcy8oZGVmYXVsdCkvY29sbGVjdGlvbkdyb3Vwcy9xdWVzdGlvbnMvaW5kZXhlcy9fEAEaCgoGdXNlcklkEAEaDQoJY3JlYXRlZEF0EAIaDAoIX19uYW1lX18QAg
+2026-06-19 10:58:23 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 10:58:23] "[35m[1mGET /api/progress?userId=0uqhtG0lb8U6kpeDERB8isQR0Mh1 HTTP/1.1[0m" 500 -
+2026-06-19 10:58:23 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 10:58:23] "OPTIONS /api/courses HTTP/1.1" 200 -
+2026-06-19 10:58:23 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 10:58:23] "OPTIONS /api/courses HTTP/1.1" 200 -
+2026-06-19 11:00:34 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 11:00:34] "OPTIONS /api/courses HTTP/1.1" 200 -
+2026-06-19 11:00:34 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 11:00:34] "OPTIONS /api/courses HTTP/1.1" 200 -
+2026-06-19 11:00:41 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 11:00:41] "OPTIONS /api/courses/BZFYCgfeKYOyHO3NPDkh/questions HTTP/1.1" 200 -
+2026-06-19 11:00:41 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 11:00:41] "OPTIONS /api/courses/BZFYCgfeKYOyHO3NPDkh/questions HTTP/1.1" 200 -
+2026-06-19 11:00:41 [INFO] src.infrastructure.adapters.inbound.middlewares.auth_middleware: Auth exitoso: uid=0uqhtG0lb8U6kpeDERB8isQR0Mh1 endpoint=courses.get_questions_by_course
+2026-06-19 11:00:41 [ERROR] src.infrastructure.adapters.inbound.controllers.course_controller: get_questions_by_course BZFYCgfeKYOyHO3NPDkh: error - 400 The query requires an index. You can create it here: https://console.firebase.google.com/v1/r/project/proyecto01-7b3d9/firestore/indexes?create_composite=ClJwcm9qZWN0cy9wcm95ZWN0bzAxLTdiM2Q5L2RhdGFiYXNlcy8oZGVmYXVsdCkvY29sbGVjdGlvbkdyb3Vwcy9xdWVzdGlvbnMvaW5kZXhlcy9fEAEaDAoIY291cnNlSWQQARoNCgljcmVhdGVkQXQQAhoMCghfX25hbWVfXxAC
+Traceback (most recent call last):
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\api_core\grpc_helpers.py", line 149, in error_remapped_callable
+    return _StreamingResponseIterator(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\api_core\grpc_helpers.py", line 71, in __init__
+    self._stored_first_result = next(self._wrapped)
+                                ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\grpc\_channel.py", line 538, in __next__
+    return self._next()
+           ^^^^^^^^^^^^
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\grpc\_channel.py", line 956, in _next
+    raise self
+grpc._channel._MultiThreadedRendezvous: <_MultiThreadedRendezvous of RPC that terminated with:
+	status = StatusCode.FAILED_PRECONDITION
+	details = "The query requires an index. You can create it here: https://console.firebase.google.com/v1/r/project/proyecto01-7b3d9/firestore/indexes?create_composite=ClJwcm9qZWN0cy9wcm95ZWN0bzAxLTdiM2Q5L2RhdGFiYXNlcy8oZGVmYXVsdCkvY29sbGVjdGlvbkdyb3Vwcy9xdWVzdGlvbnMvaW5kZXhlcy9fEAEaDAoIY291cnNlSWQQARoNCgljcmVhdGVkQXQQAhoMCghfX25hbWVfXxAC"
+	debug_error_string = "UNKNOWN:Error received from peer ipv4:64.233.190.95:443 {grpc_status:9, grpc_message:"The query requires an index. You can create it here: https://console.firebase.google.com/v1/r/project/proyecto01-7b3d9/firestore/indexes?create_composite=ClJwcm9qZWN0cy9wcm95ZWN0bzAxLTdiM2Q5L2RhdGFiYXNlcy8oZGVmYXVsdCkvY29sbGVjdGlvbkdyb3Vwcy9xdWVzdGlvbnMvaW5kZXhlcy9fEAEaDAoIY291cnNlSWQQARoNCgljcmVhdGVkQXQQAhoMCghfX25hbWVfXxAC"}"
+>
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\ASUS\PlataformaLIA\backend\src\infrastructure\adapters\inbound\controllers\course_controller.py", line 84, in get_questions_by_course
+    questions = repo.get_questions_by_course(course_id, limit=limit_val, start_after=start_after)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\PlataformaLIA\backend\src\infrastructure\adapters\outbound\database\FirestoreRepository.py", line 30, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\PlataformaLIA\backend\src\infrastructure\adapters\outbound\database\FirestoreRepository.py", line 153, in get_questions_by_course
+    for doc in docs:
+               ^^^^
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\cloud\firestore_v1\stream_generator.py", line 58, in __next__
+    return self._generator.__next__()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\cloud\firestore_v1\query.py", line 423, in _make_stream
+    response_iterator, expected_prefix = self._get_stream_iterator(
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\cloud\firestore_v1\query.py", line 268, in _get_stream_iterator
+    response_iterator = self._client._firestore_api.run_query(
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\cloud\firestore_v1\services\firestore\client.py", line 1648, in run_query
+    response = rpc(
+               ^^^^
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\api_core\gapic_v1\method.py", line 128, in __call__
+    return wrapped_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\api_core\retry\retry_unary.py", line 294, in retry_wrapped_func
+    return retry_target(
+           ^^^^^^^^^^^^^
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\api_core\retry\retry_unary.py", line 156, in retry_target
+    next_sleep = _retry_error_helper(
+                 ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\api_core\retry\retry_base.py", line 216, in _retry_error_helper
+    raise final_exc from source_exc
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\api_core\retry\retry_unary.py", line 147, in retry_target
+    result = target()
+             ^^^^^^^^
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\api_core\timeout.py", line 130, in func_with_timeout
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\api_core\grpc_helpers.py", line 153, in error_remapped_callable
+    raise exceptions.from_grpc_error(exc) from exc
+google.api_core.exceptions.FailedPrecondition: 400 The query requires an index. You can create it here: https://console.firebase.google.com/v1/r/project/proyecto01-7b3d9/firestore/indexes?create_composite=ClJwcm9qZWN0cy9wcm95ZWN0bzAxLTdiM2Q5L2RhdGFiYXNlcy8oZGVmYXVsdCkvY29sbGVjdGlvbkdyb3Vwcy9xdWVzdGlvbnMvaW5kZXhlcy9fEAEaDAoIY291cnNlSWQQARoNCgljcmVhdGVkQXQQAhoMCghfX25hbWVfXxAC
+2026-06-19 11:00:41 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 11:00:41] "[35m[1mGET /api/courses/BZFYCgfeKYOyHO3NPDkh/questions HTTP/1.1[0m" 500 -
+2026-06-19 11:00:42 [INFO] src.infrastructure.adapters.inbound.middlewares.auth_middleware: Auth exitoso: uid=0uqhtG0lb8U6kpeDERB8isQR0Mh1 endpoint=courses.get_questions_by_course
+2026-06-19 11:00:42 [ERROR] src.infrastructure.adapters.inbound.controllers.course_controller: get_questions_by_course BZFYCgfeKYOyHO3NPDkh: error - 400 The query requires an index. You can create it here: https://console.firebase.google.com/v1/r/project/proyecto01-7b3d9/firestore/indexes?create_composite=ClJwcm9qZWN0cy9wcm95ZWN0bzAxLTdiM2Q5L2RhdGFiYXNlcy8oZGVmYXVsdCkvY29sbGVjdGlvbkdyb3Vwcy9xdWVzdGlvbnMvaW5kZXhlcy9fEAEaDAoIY291cnNlSWQQARoNCgljcmVhdGVkQXQQAhoMCghfX25hbWVfXxAC
+Traceback (most recent call last):
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\api_core\grpc_helpers.py", line 149, in error_remapped_callable
+    return _StreamingResponseIterator(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\api_core\grpc_helpers.py", line 71, in __init__
+    self._stored_first_result = next(self._wrapped)
+                                ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\grpc\_channel.py", line 538, in __next__
+    return self._next()
+           ^^^^^^^^^^^^
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\grpc\_channel.py", line 956, in _next
+    raise self
+grpc._channel._MultiThreadedRendezvous: <_MultiThreadedRendezvous of RPC that terminated with:
+	status = StatusCode.FAILED_PRECONDITION
+	details = "The query requires an index. You can create it here: https://console.firebase.google.com/v1/r/project/proyecto01-7b3d9/firestore/indexes?create_composite=ClJwcm9qZWN0cy9wcm95ZWN0bzAxLTdiM2Q5L2RhdGFiYXNlcy8oZGVmYXVsdCkvY29sbGVjdGlvbkdyb3Vwcy9xdWVzdGlvbnMvaW5kZXhlcy9fEAEaDAoIY291cnNlSWQQARoNCgljcmVhdGVkQXQQAhoMCghfX25hbWVfXxAC"
+	debug_error_string = "UNKNOWN:Error received from peer ipv4:64.233.190.95:443 {grpc_message:"The query requires an index. You can create it here: https://console.firebase.google.com/v1/r/project/proyecto01-7b3d9/firestore/indexes?create_composite=ClJwcm9qZWN0cy9wcm95ZWN0bzAxLTdiM2Q5L2RhdGFiYXNlcy8oZGVmYXVsdCkvY29sbGVjdGlvbkdyb3Vwcy9xdWVzdGlvbnMvaW5kZXhlcy9fEAEaDAoIY291cnNlSWQQARoNCgljcmVhdGVkQXQQAhoMCghfX25hbWVfXxAC", grpc_status:9}"
+>
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\ASUS\PlataformaLIA\backend\src\infrastructure\adapters\inbound\controllers\course_controller.py", line 84, in get_questions_by_course
+    questions = repo.get_questions_by_course(course_id, limit=limit_val, start_after=start_after)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\PlataformaLIA\backend\src\infrastructure\adapters\outbound\database\FirestoreRepository.py", line 30, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\PlataformaLIA\backend\src\infrastructure\adapters\outbound\database\FirestoreRepository.py", line 153, in get_questions_by_course
+    for doc in docs:
+               ^^^^
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\cloud\firestore_v1\stream_generator.py", line 58, in __next__
+    return self._generator.__next__()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\cloud\firestore_v1\query.py", line 423, in _make_stream
+    response_iterator, expected_prefix = self._get_stream_iterator(
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\cloud\firestore_v1\query.py", line 268, in _get_stream_iterator
+    response_iterator = self._client._firestore_api.run_query(
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\cloud\firestore_v1\services\firestore\client.py", line 1648, in run_query
+    response = rpc(
+               ^^^^
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\api_core\gapic_v1\method.py", line 128, in __call__
+    return wrapped_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\api_core\retry\retry_unary.py", line 294, in retry_wrapped_func
+    return retry_target(
+           ^^^^^^^^^^^^^
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\api_core\retry\retry_unary.py", line 156, in retry_target
+    next_sleep = _retry_error_helper(
+                 ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\api_core\retry\retry_base.py", line 216, in _retry_error_helper
+    raise final_exc from source_exc
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\api_core\retry\retry_unary.py", line 147, in retry_target
+    result = target()
+             ^^^^^^^^
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\api_core\timeout.py", line 130, in func_with_timeout
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\api_core\grpc_helpers.py", line 153, in error_remapped_callable
+    raise exceptions.from_grpc_error(exc) from exc
+google.api_core.exceptions.FailedPrecondition: 400 The query requires an index. You can create it here: https://console.firebase.google.com/v1/r/project/proyecto01-7b3d9/firestore/indexes?create_composite=ClJwcm9qZWN0cy9wcm95ZWN0bzAxLTdiM2Q5L2RhdGFiYXNlcy8oZGVmYXVsdCkvY29sbGVjdGlvbkdyb3Vwcy9xdWVzdGlvbnMvaW5kZXhlcy9fEAEaDAoIY291cnNlSWQQARoNCgljcmVhdGVkQXQQAhoMCghfX25hbWVfXxAC
+2026-06-19 11:00:42 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 11:00:42] "[35m[1mGET /api/courses/BZFYCgfeKYOyHO3NPDkh/questions HTTP/1.1[0m" 500 -
+2026-06-19 11:00:45 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 11:00:45] "OPTIONS /api/courses HTTP/1.1" 200 -
+2026-06-19 11:00:45 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 11:00:45] "OPTIONS /api/courses HTTP/1.1" 200 -
+2026-06-19 11:01:10 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 11:01:10] "OPTIONS /api/courses/4DQbQBCUSV94nMbca27a/questions HTTP/1.1" 200 -
+2026-06-19 11:01:10 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 11:01:10] "OPTIONS /api/courses/4DQbQBCUSV94nMbca27a/questions HTTP/1.1" 200 -
+2026-06-19 11:01:10 [INFO] src.infrastructure.adapters.inbound.middlewares.auth_middleware: Auth exitoso: uid=0uqhtG0lb8U6kpeDERB8isQR0Mh1 endpoint=courses.get_questions_by_course
+2026-06-19 11:01:10 [ERROR] src.infrastructure.adapters.inbound.controllers.course_controller: get_questions_by_course 4DQbQBCUSV94nMbca27a: error - 400 The query requires an index. You can create it here: https://console.firebase.google.com/v1/r/project/proyecto01-7b3d9/firestore/indexes?create_composite=ClJwcm9qZWN0cy9wcm95ZWN0bzAxLTdiM2Q5L2RhdGFiYXNlcy8oZGVmYXVsdCkvY29sbGVjdGlvbkdyb3Vwcy9xdWVzdGlvbnMvaW5kZXhlcy9fEAEaDAoIY291cnNlSWQQARoNCgljcmVhdGVkQXQQAhoMCghfX25hbWVfXxAC
+Traceback (most recent call last):
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\api_core\grpc_helpers.py", line 149, in error_remapped_callable
+    return _StreamingResponseIterator(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\api_core\grpc_helpers.py", line 71, in __init__
+    self._stored_first_result = next(self._wrapped)
+                                ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\grpc\_channel.py", line 538, in __next__
+    return self._next()
+           ^^^^^^^^^^^^
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\grpc\_channel.py", line 956, in _next
+    raise self
+grpc._channel._MultiThreadedRendezvous: <_MultiThreadedRendezvous of RPC that terminated with:
+	status = StatusCode.FAILED_PRECONDITION
+	details = "The query requires an index. You can create it here: https://console.firebase.google.com/v1/r/project/proyecto01-7b3d9/firestore/indexes?create_composite=ClJwcm9qZWN0cy9wcm95ZWN0bzAxLTdiM2Q5L2RhdGFiYXNlcy8oZGVmYXVsdCkvY29sbGVjdGlvbkdyb3Vwcy9xdWVzdGlvbnMvaW5kZXhlcy9fEAEaDAoIY291cnNlSWQQARoNCgljcmVhdGVkQXQQAhoMCghfX25hbWVfXxAC"
+	debug_error_string = "UNKNOWN:Error received from peer ipv4:64.233.190.95:443 {grpc_status:9, grpc_message:"The query requires an index. You can create it here: https://console.firebase.google.com/v1/r/project/proyecto01-7b3d9/firestore/indexes?create_composite=ClJwcm9qZWN0cy9wcm95ZWN0bzAxLTdiM2Q5L2RhdGFiYXNlcy8oZGVmYXVsdCkvY29sbGVjdGlvbkdyb3Vwcy9xdWVzdGlvbnMvaW5kZXhlcy9fEAEaDAoIY291cnNlSWQQARoNCgljcmVhdGVkQXQQAhoMCghfX25hbWVfXxAC"}"
+>
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\ASUS\PlataformaLIA\backend\src\infrastructure\adapters\inbound\controllers\course_controller.py", line 84, in get_questions_by_course
+    questions = repo.get_questions_by_course(course_id, limit=limit_val, start_after=start_after)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\PlataformaLIA\backend\src\infrastructure\adapters\outbound\database\FirestoreRepository.py", line 30, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\PlataformaLIA\backend\src\infrastructure\adapters\outbound\database\FirestoreRepository.py", line 153, in get_questions_by_course
+    for doc in docs:
+               ^^^^
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\cloud\firestore_v1\stream_generator.py", line 58, in __next__
+    return self._generator.__next__()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\cloud\firestore_v1\query.py", line 423, in _make_stream
+    response_iterator, expected_prefix = self._get_stream_iterator(
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\cloud\firestore_v1\query.py", line 268, in _get_stream_iterator
+    response_iterator = self._client._firestore_api.run_query(
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\cloud\firestore_v1\services\firestore\client.py", line 1648, in run_query
+    response = rpc(
+               ^^^^
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\api_core\gapic_v1\method.py", line 128, in __call__
+    return wrapped_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\api_core\retry\retry_unary.py", line 294, in retry_wrapped_func
+    return retry_target(
+           ^^^^^^^^^^^^^
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\api_core\retry\retry_unary.py", line 156, in retry_target
+    next_sleep = _retry_error_helper(
+                 ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\api_core\retry\retry_base.py", line 216, in _retry_error_helper
+    raise final_exc from source_exc
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\api_core\retry\retry_unary.py", line 147, in retry_target
+    result = target()
+             ^^^^^^^^
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\api_core\timeout.py", line 130, in func_with_timeout
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\api_core\grpc_helpers.py", line 153, in error_remapped_callable
+    raise exceptions.from_grpc_error(exc) from exc
+google.api_core.exceptions.FailedPrecondition: 400 The query requires an index. You can create it here: https://console.firebase.google.com/v1/r/project/proyecto01-7b3d9/firestore/indexes?create_composite=ClJwcm9qZWN0cy9wcm95ZWN0bzAxLTdiM2Q5L2RhdGFiYXNlcy8oZGVmYXVsdCkvY29sbGVjdGlvbkdyb3Vwcy9xdWVzdGlvbnMvaW5kZXhlcy9fEAEaDAoIY291cnNlSWQQARoNCgljcmVhdGVkQXQQAhoMCghfX25hbWVfXxAC
+2026-06-19 11:01:10 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 11:01:10] "[35m[1mGET /api/courses/4DQbQBCUSV94nMbca27a/questions HTTP/1.1[0m" 500 -
+2026-06-19 11:01:10 [INFO] src.infrastructure.adapters.inbound.middlewares.auth_middleware: Auth exitoso: uid=0uqhtG0lb8U6kpeDERB8isQR0Mh1 endpoint=courses.get_questions_by_course
+2026-06-19 11:01:11 [ERROR] src.infrastructure.adapters.inbound.controllers.course_controller: get_questions_by_course 4DQbQBCUSV94nMbca27a: error - 400 The query requires an index. You can create it here: https://console.firebase.google.com/v1/r/project/proyecto01-7b3d9/firestore/indexes?create_composite=ClJwcm9qZWN0cy9wcm95ZWN0bzAxLTdiM2Q5L2RhdGFiYXNlcy8oZGVmYXVsdCkvY29sbGVjdGlvbkdyb3Vwcy9xdWVzdGlvbnMvaW5kZXhlcy9fEAEaDAoIY291cnNlSWQQARoNCgljcmVhdGVkQXQQAhoMCghfX25hbWVfXxAC
+Traceback (most recent call last):
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\api_core\grpc_helpers.py", line 149, in error_remapped_callable
+    return _StreamingResponseIterator(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\api_core\grpc_helpers.py", line 71, in __init__
+    self._stored_first_result = next(self._wrapped)
+                                ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\grpc\_channel.py", line 538, in __next__
+    return self._next()
+           ^^^^^^^^^^^^
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\grpc\_channel.py", line 956, in _next
+    raise self
+grpc._channel._MultiThreadedRendezvous: <_MultiThreadedRendezvous of RPC that terminated with:
+	status = StatusCode.FAILED_PRECONDITION
+	details = "The query requires an index. You can create it here: https://console.firebase.google.com/v1/r/project/proyecto01-7b3d9/firestore/indexes?create_composite=ClJwcm9qZWN0cy9wcm95ZWN0bzAxLTdiM2Q5L2RhdGFiYXNlcy8oZGVmYXVsdCkvY29sbGVjdGlvbkdyb3Vwcy9xdWVzdGlvbnMvaW5kZXhlcy9fEAEaDAoIY291cnNlSWQQARoNCgljcmVhdGVkQXQQAhoMCghfX25hbWVfXxAC"
+	debug_error_string = "UNKNOWN:Error received from peer ipv4:64.233.190.95:443 {grpc_status:9, grpc_message:"The query requires an index. You can create it here: https://console.firebase.google.com/v1/r/project/proyecto01-7b3d9/firestore/indexes?create_composite=ClJwcm9qZWN0cy9wcm95ZWN0bzAxLTdiM2Q5L2RhdGFiYXNlcy8oZGVmYXVsdCkvY29sbGVjdGlvbkdyb3Vwcy9xdWVzdGlvbnMvaW5kZXhlcy9fEAEaDAoIY291cnNlSWQQARoNCgljcmVhdGVkQXQQAhoMCghfX25hbWVfXxAC"}"
+>
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\ASUS\PlataformaLIA\backend\src\infrastructure\adapters\inbound\controllers\course_controller.py", line 84, in get_questions_by_course
+    questions = repo.get_questions_by_course(course_id, limit=limit_val, start_after=start_after)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\PlataformaLIA\backend\src\infrastructure\adapters\outbound\database\FirestoreRepository.py", line 30, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\PlataformaLIA\backend\src\infrastructure\adapters\outbound\database\FirestoreRepository.py", line 153, in get_questions_by_course
+    for doc in docs:
+               ^^^^
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\cloud\firestore_v1\stream_generator.py", line 58, in __next__
+    return self._generator.__next__()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\cloud\firestore_v1\query.py", line 423, in _make_stream
+    response_iterator, expected_prefix = self._get_stream_iterator(
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\cloud\firestore_v1\query.py", line 268, in _get_stream_iterator
+    response_iterator = self._client._firestore_api.run_query(
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\cloud\firestore_v1\services\firestore\client.py", line 1648, in run_query
+    response = rpc(
+               ^^^^
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\api_core\gapic_v1\method.py", line 128, in __call__
+    return wrapped_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\api_core\retry\retry_unary.py", line 294, in retry_wrapped_func
+    return retry_target(
+           ^^^^^^^^^^^^^
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\api_core\retry\retry_unary.py", line 156, in retry_target
+    next_sleep = _retry_error_helper(
+                 ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\api_core\retry\retry_base.py", line 216, in _retry_error_helper
+    raise final_exc from source_exc
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\api_core\retry\retry_unary.py", line 147, in retry_target
+    result = target()
+             ^^^^^^^^
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\api_core\timeout.py", line 130, in func_with_timeout
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\api_core\grpc_helpers.py", line 153, in error_remapped_callable
+    raise exceptions.from_grpc_error(exc) from exc
+google.api_core.exceptions.FailedPrecondition: 400 The query requires an index. You can create it here: https://console.firebase.google.com/v1/r/project/proyecto01-7b3d9/firestore/indexes?create_composite=ClJwcm9qZWN0cy9wcm95ZWN0bzAxLTdiM2Q5L2RhdGFiYXNlcy8oZGVmYXVsdCkvY29sbGVjdGlvbkdyb3Vwcy9xdWVzdGlvbnMvaW5kZXhlcy9fEAEaDAoIY291cnNlSWQQARoNCgljcmVhdGVkQXQQAhoMCghfX25hbWVfXxAC
+2026-06-19 11:01:11 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 11:01:11] "[35m[1mGET /api/courses/4DQbQBCUSV94nMbca27a/questions HTTP/1.1[0m" 500 -
+2026-06-19 11:10:55 [WARNING] security: EVENTO=TOKEN_FALTANTE endpoint=courses.get_questions_by_course ip=127.0.0.1
+2026-06-19 11:10:55 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 11:10:55] "[31m[1mGET /api/courses/4DQbQBCUSV94nMbca27a/questions HTTP/1.1[0m" 401 -
+2026-06-19 11:10:55 [WARNING] security: EVENTO=TOKEN_FALTANTE endpoint=courses.get_questions_by_course ip=127.0.0.1
+2026-06-19 11:10:55 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 11:10:55] "[31m[1mGET /api/courses/4DQbQBCUSV94nMbca27a/questions HTTP/1.1[0m" 401 -
+2026-06-19 11:11:29 [INFO] werkzeug: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2026-06-19 11:11:29 [INFO] werkzeug: [33mPress CTRL+C to quit[0m
+2026-06-19 11:11:43 [WARNING] security: EVENTO=TOKEN_FALTANTE endpoint=courses.get_questions_by_course ip=127.0.0.1
+2026-06-19 11:11:43 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 11:11:43] "[31m[1mGET /api/courses/4DQbQBCUSV94nMbca27a/questions HTTP/1.1[0m" 401 -
+2026-06-19 11:11:43 [WARNING] security: EVENTO=TOKEN_FALTANTE endpoint=courses.get_questions_by_course ip=127.0.0.1
+2026-06-19 11:11:43 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 11:11:43] "[31m[1mGET /api/courses/4DQbQBCUSV94nMbca27a/questions HTTP/1.1[0m" 401 -
+2026-06-19 11:12:05 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 11:12:05] "OPTIONS /api/courses HTTP/1.1" 200 -
+2026-06-19 11:12:05 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 11:12:05] "OPTIONS /api/courses HTTP/1.1" 200 -
+2026-06-19 11:12:07 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 11:12:07] "OPTIONS /api/courses/4DQbQBCUSV94nMbca27a/questions HTTP/1.1" 200 -
+2026-06-19 11:12:07 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 11:12:07] "OPTIONS /api/courses/4DQbQBCUSV94nMbca27a/questions HTTP/1.1" 200 -
+2026-06-19 11:12:10 [INFO] src.infrastructure.adapters.inbound.middlewares.auth_middleware: Auth exitoso: uid=0uqhtG0lb8U6kpeDERB8isQR0Mh1 endpoint=courses.get_questions_by_course
+2026-06-19 11:12:12 [INFO] src.infrastructure.adapters.inbound.controllers.course_controller: Preguntas del curso 4DQbQBCUSV94nMbca27a: 20 encontradas
+2026-06-19 11:12:12 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 11:12:12] "GET /api/courses/4DQbQBCUSV94nMbca27a/questions HTTP/1.1" 200 -
+2026-06-19 11:12:12 [INFO] src.infrastructure.adapters.inbound.middlewares.auth_middleware: Auth exitoso: uid=0uqhtG0lb8U6kpeDERB8isQR0Mh1 endpoint=courses.get_questions_by_course
+2026-06-19 11:12:12 [INFO] src.infrastructure.adapters.inbound.controllers.course_controller: Preguntas del curso 4DQbQBCUSV94nMbca27a: 20 encontradas
+2026-06-19 11:12:12 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 11:12:12] "GET /api/courses/4DQbQBCUSV94nMbca27a/questions HTTP/1.1" 200 -
+2026-06-19 11:12:17 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 11:12:17] "OPTIONS /api/questions/fT6ikLDrjgvDz2SL95qW HTTP/1.1" 200 -
+2026-06-19 11:12:17 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 11:12:17] "OPTIONS /api/questions/fT6ikLDrjgvDz2SL95qW HTTP/1.1" 200 -
+2026-06-19 11:12:18 [INFO] src.infrastructure.adapters.inbound.middlewares.auth_middleware: Auth exitoso: uid=0uqhtG0lb8U6kpeDERB8isQR0Mh1 endpoint=questions.obtener_pregunta
+2026-06-19 11:12:18 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 11:12:18] "GET /api/questions/fT6ikLDrjgvDz2SL95qW HTTP/1.1" 200 -
+2026-06-19 11:12:18 [INFO] src.infrastructure.adapters.inbound.middlewares.auth_middleware: Auth exitoso: uid=0uqhtG0lb8U6kpeDERB8isQR0Mh1 endpoint=questions.obtener_pregunta
+2026-06-19 11:12:19 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 11:12:19] "GET /api/questions/fT6ikLDrjgvDz2SL95qW HTTP/1.1" 200 -
+2026-06-19 11:12:21 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 11:12:21] "OPTIONS /api/courses/4DQbQBCUSV94nMbca27a/questions HTTP/1.1" 200 -
+2026-06-19 11:12:21 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 11:12:21] "OPTIONS /api/courses/4DQbQBCUSV94nMbca27a/questions HTTP/1.1" 200 -
+2026-06-19 11:12:21 [INFO] src.infrastructure.adapters.inbound.middlewares.auth_middleware: Auth exitoso: uid=0uqhtG0lb8U6kpeDERB8isQR0Mh1 endpoint=courses.get_questions_by_course
+2026-06-19 11:12:21 [INFO] src.infrastructure.adapters.inbound.controllers.course_controller: Preguntas del curso 4DQbQBCUSV94nMbca27a: 20 encontradas
+2026-06-19 11:12:21 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 11:12:21] "GET /api/courses/4DQbQBCUSV94nMbca27a/questions HTTP/1.1" 200 -
+2026-06-19 11:12:21 [INFO] src.infrastructure.adapters.inbound.middlewares.auth_middleware: Auth exitoso: uid=0uqhtG0lb8U6kpeDERB8isQR0Mh1 endpoint=courses.get_questions_by_course
+2026-06-19 11:12:22 [INFO] src.infrastructure.adapters.inbound.controllers.course_controller: Preguntas del curso 4DQbQBCUSV94nMbca27a: 20 encontradas
+2026-06-19 11:12:22 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 11:12:22] "GET /api/courses/4DQbQBCUSV94nMbca27a/questions HTTP/1.1" 200 -
+2026-06-19 11:12:28 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 11:12:28] "OPTIONS /api/courses/4DQbQBCUSV94nMbca27a/questions HTTP/1.1" 200 -
+2026-06-19 11:12:28 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 11:12:28] "OPTIONS /api/courses/4DQbQBCUSV94nMbca27a/questions HTTP/1.1" 200 -
+2026-06-19 11:12:28 [INFO] src.infrastructure.adapters.inbound.middlewares.auth_middleware: Auth exitoso: uid=0uqhtG0lb8U6kpeDERB8isQR0Mh1 endpoint=courses.get_questions_by_course
+2026-06-19 11:12:28 [INFO] src.infrastructure.adapters.inbound.controllers.course_controller: Preguntas del curso 4DQbQBCUSV94nMbca27a: 20 encontradas
+2026-06-19 11:12:28 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 11:12:28] "GET /api/courses/4DQbQBCUSV94nMbca27a/questions HTTP/1.1" 200 -
+2026-06-19 11:12:29 [INFO] src.infrastructure.adapters.inbound.middlewares.auth_middleware: Auth exitoso: uid=0uqhtG0lb8U6kpeDERB8isQR0Mh1 endpoint=courses.get_questions_by_course
+2026-06-19 11:12:29 [INFO] src.infrastructure.adapters.inbound.controllers.course_controller: Preguntas del curso 4DQbQBCUSV94nMbca27a: 20 encontradas
+2026-06-19 11:12:29 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 11:12:29] "GET /api/courses/4DQbQBCUSV94nMbca27a/questions HTTP/1.1" 200 -
+2026-06-19 11:12:40 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 11:12:40] "OPTIONS /api/courses HTTP/1.1" 200 -
+2026-06-19 11:12:40 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 11:12:40] "OPTIONS /api/courses HTTP/1.1" 200 -
+2026-06-19 11:13:21 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 11:13:21] "OPTIONS /api/courses/RJKgX0sRDDx4DGdjl3fX/questions HTTP/1.1" 200 -
+2026-06-19 11:13:21 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 11:13:21] "OPTIONS /api/courses/RJKgX0sRDDx4DGdjl3fX/questions HTTP/1.1" 200 -
+2026-06-19 11:13:21 [INFO] src.infrastructure.adapters.inbound.middlewares.auth_middleware: Auth exitoso: uid=0uqhtG0lb8U6kpeDERB8isQR0Mh1 endpoint=courses.get_questions_by_course
+2026-06-19 11:13:22 [INFO] src.infrastructure.adapters.inbound.controllers.course_controller: Preguntas del curso RJKgX0sRDDx4DGdjl3fX: 20 encontradas
+2026-06-19 11:13:22 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 11:13:22] "GET /api/courses/RJKgX0sRDDx4DGdjl3fX/questions HTTP/1.1" 200 -
+2026-06-19 11:13:22 [INFO] src.infrastructure.adapters.inbound.middlewares.auth_middleware: Auth exitoso: uid=0uqhtG0lb8U6kpeDERB8isQR0Mh1 endpoint=courses.get_questions_by_course
+2026-06-19 11:13:22 [INFO] src.infrastructure.adapters.inbound.controllers.course_controller: Preguntas del curso RJKgX0sRDDx4DGdjl3fX: 20 encontradas
+2026-06-19 11:13:22 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 11:13:22] "GET /api/courses/RJKgX0sRDDx4DGdjl3fX/questions HTTP/1.1" 200 -
+2026-06-19 11:13:28 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 11:13:28] "OPTIONS /api/questions HTTP/1.1" 200 -
+2026-06-19 11:13:28 [INFO] src.infrastructure.adapters.inbound.middlewares.auth_middleware: Auth exitoso: uid=0uqhtG0lb8U6kpeDERB8isQR0Mh1 endpoint=questions.crear_pregunta
+2026-06-19 11:13:29 [INFO] google_genai.models: AFC is enabled with max remote calls: 10.
+2026-06-19 11:13:30 [INFO] httpx: HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 400 Bad Request"
+2026-06-19 11:13:30 [ERROR] src.infrastructure.adapters.outbound.ai.NLPServiceAdapter: Gemini error — fallback Bloom: 400 INVALID_ARGUMENT. {'error': {'code': 400, 'message': 'API key not valid. Please pass a valid API key.', 'status': 'INVALID_ARGUMENT', 'details': [{'@type': 'type.googleapis.com/google.rpc.ErrorInfo', 'reason': 'API_KEY_INVALID', 'domain': 'googleapis.com', 'metadata': {'service': 'generativelanguage.googleapis.com'}}, {'@type': 'type.googleapis.com/google.rpc.LocalizedMessage', 'locale': 'en-US', 'message': 'API key not valid. Please pass a valid API key.'}]}}
+2026-06-19 11:13:30 [INFO] src.infrastructure.adapters.outbound.database.FirestoreRepository: Pregunta creada en Firestore: OuCuTPJKR7BxO1GUvPVc
+2026-06-19 11:13:30 [INFO] src.infrastructure.adapters.inbound.controllers.question_controller: Pregunta creada exitosamente: OuCuTPJKR7BxO1GUvPVc
+2026-06-19 11:13:30 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 11:13:30] "[35m[1mPOST /api/questions HTTP/1.1[0m" 201 -
+2026-06-19 11:13:32 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 11:13:32] "OPTIONS /api/courses/RJKgX0sRDDx4DGdjl3fX/questions HTTP/1.1" 200 -
+2026-06-19 11:13:32 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 11:13:32] "OPTIONS /api/courses/RJKgX0sRDDx4DGdjl3fX/questions HTTP/1.1" 200 -
+2026-06-19 11:13:32 [INFO] src.infrastructure.adapters.inbound.middlewares.auth_middleware: Auth exitoso: uid=0uqhtG0lb8U6kpeDERB8isQR0Mh1 endpoint=courses.get_questions_by_course
+2026-06-19 11:13:32 [INFO] src.infrastructure.adapters.inbound.controllers.course_controller: Preguntas del curso RJKgX0sRDDx4DGdjl3fX: 20 encontradas
+2026-06-19 11:13:32 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 11:13:32] "GET /api/courses/RJKgX0sRDDx4DGdjl3fX/questions HTTP/1.1" 200 -
+2026-06-19 11:13:32 [INFO] src.infrastructure.adapters.inbound.middlewares.auth_middleware: Auth exitoso: uid=0uqhtG0lb8U6kpeDERB8isQR0Mh1 endpoint=courses.get_questions_by_course
+2026-06-19 11:13:33 [INFO] src.infrastructure.adapters.inbound.controllers.course_controller: Preguntas del curso RJKgX0sRDDx4DGdjl3fX: 20 encontradas
+2026-06-19 11:13:33 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 11:13:33] "GET /api/courses/RJKgX0sRDDx4DGdjl3fX/questions HTTP/1.1" 200 -
+2026-06-19 11:13:37 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 11:13:37] "OPTIONS /api/questions/OuCuTPJKR7BxO1GUvPVc HTTP/1.1" 200 -
+2026-06-19 11:13:37 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 11:13:37] "OPTIONS /api/questions/OuCuTPJKR7BxO1GUvPVc HTTP/1.1" 200 -
+2026-06-19 11:13:37 [INFO] src.infrastructure.adapters.inbound.middlewares.auth_middleware: Auth exitoso: uid=0uqhtG0lb8U6kpeDERB8isQR0Mh1 endpoint=questions.obtener_pregunta
+2026-06-19 11:13:38 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 11:13:38] "GET /api/questions/OuCuTPJKR7BxO1GUvPVc HTTP/1.1" 200 -
+2026-06-19 11:13:38 [INFO] src.infrastructure.adapters.inbound.middlewares.auth_middleware: Auth exitoso: uid=0uqhtG0lb8U6kpeDERB8isQR0Mh1 endpoint=questions.obtener_pregunta
+2026-06-19 11:13:39 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 11:13:39] "GET /api/questions/OuCuTPJKR7BxO1GUvPVc HTTP/1.1" 200 -
+2026-06-19 11:26:32 [INFO] werkzeug: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2026-06-19 11:26:32 [INFO] werkzeug: [33mPress CTRL+C to quit[0m
+2026-06-19 11:26:48 [WARNING] security: EVENTO=TOKEN_FALTANTE endpoint=questions.obtener_pregunta ip=127.0.0.1
+2026-06-19 11:26:48 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 11:26:48] "[31m[1mGET /api/questions/OuCuTPJKR7BxO1GUvPVc HTTP/1.1[0m" 401 -
+2026-06-19 11:26:48 [WARNING] security: EVENTO=TOKEN_FALTANTE endpoint=questions.obtener_pregunta ip=127.0.0.1
+2026-06-19 11:26:48 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 11:26:48] "[31m[1mGET /api/questions/OuCuTPJKR7BxO1GUvPVc HTTP/1.1[0m" 401 -
+2026-06-19 11:31:17 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 11:31:17] "OPTIONS /api/progress?userId=0uqhtG0lb8U6kpeDERB8isQR0Mh1 HTTP/1.1" 200 -
+2026-06-19 11:31:17 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 11:31:17] "OPTIONS /api/progress?userId=0uqhtG0lb8U6kpeDERB8isQR0Mh1 HTTP/1.1" 200 -
+2026-06-19 11:31:20 [INFO] src.infrastructure.adapters.inbound.middlewares.auth_middleware: Auth exitoso: uid=0uqhtG0lb8U6kpeDERB8isQR0Mh1 endpoint=progress.analizar_progreso
+2026-06-19 11:31:23 [INFO] src.infrastructure.adapters.inbound.controllers.progress_controller: Progreso analizado para usuario 0uqhtG0lb8U6kpeDERB8isQR0Mh1
+2026-06-19 11:31:23 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 11:31:23] "GET /api/progress?userId=0uqhtG0lb8U6kpeDERB8isQR0Mh1 HTTP/1.1" 200 -
+2026-06-19 11:31:23 [INFO] src.infrastructure.adapters.inbound.middlewares.auth_middleware: Auth exitoso: uid=0uqhtG0lb8U6kpeDERB8isQR0Mh1 endpoint=progress.analizar_progreso
+2026-06-19 11:31:23 [INFO] src.infrastructure.adapters.inbound.controllers.progress_controller: Progreso analizado para usuario 0uqhtG0lb8U6kpeDERB8isQR0Mh1
+2026-06-19 11:31:23 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 11:31:23] "GET /api/progress?userId=0uqhtG0lb8U6kpeDERB8isQR0Mh1 HTTP/1.1" 200 -
+2026-06-19 11:31:31 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 11:31:31] "OPTIONS /api/courses HTTP/1.1" 200 -
+2026-06-19 11:31:31 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 11:31:31] "OPTIONS /api/courses HTTP/1.1" 200 -
+2026-06-19 11:31:33 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 11:31:33] "OPTIONS /api/courses/RJKgX0sRDDx4DGdjl3fX/questions HTTP/1.1" 200 -
+2026-06-19 11:31:33 [INFO] src.infrastructure.adapters.inbound.middlewares.auth_middleware: Auth exitoso: uid=0uqhtG0lb8U6kpeDERB8isQR0Mh1 endpoint=courses.get_questions_by_course
+2026-06-19 11:31:33 [INFO] src.infrastructure.adapters.inbound.controllers.course_controller: Preguntas del curso RJKgX0sRDDx4DGdjl3fX: 20 encontradas
+2026-06-19 11:31:33 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 11:31:33] "GET /api/courses/RJKgX0sRDDx4DGdjl3fX/questions HTTP/1.1" 200 -
+2026-06-19 11:31:34 [INFO] src.infrastructure.adapters.inbound.middlewares.auth_middleware: Auth exitoso: uid=0uqhtG0lb8U6kpeDERB8isQR0Mh1 endpoint=courses.get_questions_by_course
+2026-06-19 11:31:34 [INFO] src.infrastructure.adapters.inbound.controllers.course_controller: Preguntas del curso RJKgX0sRDDx4DGdjl3fX: 20 encontradas
+2026-06-19 11:31:34 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 11:31:34] "GET /api/courses/RJKgX0sRDDx4DGdjl3fX/questions HTTP/1.1" 200 -
+2026-06-19 11:31:53 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 11:31:53] "OPTIONS /api/questions HTTP/1.1" 200 -
+2026-06-19 11:31:54 [INFO] src.infrastructure.adapters.inbound.middlewares.auth_middleware: Auth exitoso: uid=0uqhtG0lb8U6kpeDERB8isQR0Mh1 endpoint=questions.crear_pregunta
+2026-06-19 11:31:55 [INFO] google_genai.models: AFC is enabled with max remote calls: 10.
+2026-06-19 11:32:03 [INFO] httpx: HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2026-06-19 11:32:03 [INFO] src.infrastructure.adapters.outbound.database.FirestoreRepository: Pregunta creada en Firestore: p0xbDNbVXlCIb9RhQYnU
+2026-06-19 11:32:03 [INFO] src.infrastructure.adapters.inbound.controllers.question_controller: Pregunta creada exitosamente: p0xbDNbVXlCIb9RhQYnU
+2026-06-19 11:32:03 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 11:32:03] "[35m[1mPOST /api/questions HTTP/1.1[0m" 201 -
+2026-06-19 11:32:04 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 11:32:04] "OPTIONS /api/courses/RJKgX0sRDDx4DGdjl3fX/questions HTTP/1.1" 200 -
+2026-06-19 11:32:04 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 11:32:04] "OPTIONS /api/courses/RJKgX0sRDDx4DGdjl3fX/questions HTTP/1.1" 200 -
+2026-06-19 11:32:05 [INFO] src.infrastructure.adapters.inbound.middlewares.auth_middleware: Auth exitoso: uid=0uqhtG0lb8U6kpeDERB8isQR0Mh1 endpoint=courses.get_questions_by_course
+2026-06-19 11:32:05 [INFO] src.infrastructure.adapters.inbound.controllers.course_controller: Preguntas del curso RJKgX0sRDDx4DGdjl3fX: 20 encontradas
+2026-06-19 11:32:05 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 11:32:05] "GET /api/courses/RJKgX0sRDDx4DGdjl3fX/questions HTTP/1.1" 200 -
+2026-06-19 11:32:05 [INFO] src.infrastructure.adapters.inbound.middlewares.auth_middleware: Auth exitoso: uid=0uqhtG0lb8U6kpeDERB8isQR0Mh1 endpoint=courses.get_questions_by_course
+2026-06-19 11:32:06 [INFO] src.infrastructure.adapters.inbound.controllers.course_controller: Preguntas del curso RJKgX0sRDDx4DGdjl3fX: 20 encontradas
+2026-06-19 11:32:06 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 11:32:06] "GET /api/courses/RJKgX0sRDDx4DGdjl3fX/questions HTTP/1.1" 200 -
+2026-06-19 11:32:09 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 11:32:09] "OPTIONS /api/questions/p0xbDNbVXlCIb9RhQYnU HTTP/1.1" 200 -
+2026-06-19 11:32:09 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 11:32:09] "OPTIONS /api/questions/p0xbDNbVXlCIb9RhQYnU HTTP/1.1" 200 -
+2026-06-19 11:32:10 [INFO] src.infrastructure.adapters.inbound.middlewares.auth_middleware: Auth exitoso: uid=0uqhtG0lb8U6kpeDERB8isQR0Mh1 endpoint=questions.obtener_pregunta
+2026-06-19 11:32:10 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 11:32:10] "GET /api/questions/p0xbDNbVXlCIb9RhQYnU HTTP/1.1" 200 -
+2026-06-19 11:32:10 [INFO] src.infrastructure.adapters.inbound.middlewares.auth_middleware: Auth exitoso: uid=0uqhtG0lb8U6kpeDERB8isQR0Mh1 endpoint=questions.obtener_pregunta
+2026-06-19 11:32:11 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 11:32:11] "GET /api/questions/p0xbDNbVXlCIb9RhQYnU HTTP/1.1" 200 -
+2026-06-19 11:33:18 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 11:33:18] "OPTIONS /api/progress?userId=0uqhtG0lb8U6kpeDERB8isQR0Mh1 HTTP/1.1" 200 -
+2026-06-19 11:33:18 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 11:33:18] "OPTIONS /api/progress?userId=0uqhtG0lb8U6kpeDERB8isQR0Mh1 HTTP/1.1" 200 -
+2026-06-19 11:33:19 [INFO] src.infrastructure.adapters.inbound.middlewares.auth_middleware: Auth exitoso: uid=0uqhtG0lb8U6kpeDERB8isQR0Mh1 endpoint=progress.analizar_progreso
+2026-06-19 11:33:19 [INFO] src.infrastructure.adapters.inbound.controllers.progress_controller: Progreso analizado para usuario 0uqhtG0lb8U6kpeDERB8isQR0Mh1
+2026-06-19 11:33:19 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 11:33:19] "GET /api/progress?userId=0uqhtG0lb8U6kpeDERB8isQR0Mh1 HTTP/1.1" 200 -
+2026-06-19 11:33:19 [INFO] src.infrastructure.adapters.inbound.middlewares.auth_middleware: Auth exitoso: uid=0uqhtG0lb8U6kpeDERB8isQR0Mh1 endpoint=progress.analizar_progreso
+2026-06-19 11:33:20 [INFO] src.infrastructure.adapters.inbound.controllers.progress_controller: Progreso analizado para usuario 0uqhtG0lb8U6kpeDERB8isQR0Mh1
+2026-06-19 11:33:20 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 11:33:20] "GET /api/progress?userId=0uqhtG0lb8U6kpeDERB8isQR0Mh1 HTTP/1.1" 200 -
+2026-06-19 11:41:29 [INFO] werkzeug: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2026-06-19 11:41:29 [INFO] werkzeug: [33mPress CTRL+C to quit[0m
+2026-06-19 11:41:33 [WARNING] security: EVENTO=TOKEN_FALTANTE endpoint=progress.analizar_progreso ip=127.0.0.1
+2026-06-19 11:41:33 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 11:41:33] "[31m[1mGET /api/progress HTTP/1.1[0m" 401 -
+2026-06-19 11:41:33 [WARNING] security: EVENTO=TOKEN_FALTANTE endpoint=progress.analizar_progreso ip=127.0.0.1
+2026-06-19 11:41:33 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 11:41:33] "[31m[1mGET /api/progress HTTP/1.1[0m" 401 -
+2026-06-19 11:41:36 [WARNING] security: EVENTO=TOKEN_FALTANTE endpoint=progress.analizar_progreso ip=127.0.0.1
+2026-06-19 11:41:36 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 11:41:36] "[31m[1mGET /api/progress HTTP/1.1[0m" 401 -
+2026-06-19 11:41:36 [WARNING] security: EVENTO=TOKEN_FALTANTE endpoint=progress.analizar_progreso ip=127.0.0.1
+2026-06-19 11:41:36 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 11:41:36] "[31m[1mGET /api/progress HTTP/1.1[0m" 401 -
+2026-06-19 11:41:50 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 11:41:50] "OPTIONS /api/courses HTTP/1.1" 200 -
+2026-06-19 11:41:50 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 11:41:50] "OPTIONS /api/courses HTTP/1.1" 200 -
+2026-06-19 11:41:54 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 11:41:54] "OPTIONS /api/courses/RJKgX0sRDDx4DGdjl3fX/questions HTTP/1.1" 200 -
+2026-06-19 11:41:54 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 11:41:54] "OPTIONS /api/courses/RJKgX0sRDDx4DGdjl3fX/questions HTTP/1.1" 200 -
+2026-06-19 11:41:56 [INFO] src.infrastructure.adapters.inbound.middlewares.auth_middleware: Auth exitoso: uid=0uqhtG0lb8U6kpeDERB8isQR0Mh1 endpoint=courses.get_questions_by_course
+2026-06-19 11:41:58 [INFO] src.infrastructure.adapters.inbound.controllers.course_controller: Preguntas del curso RJKgX0sRDDx4DGdjl3fX: 20 encontradas
+2026-06-19 11:41:58 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 11:41:58] "GET /api/courses/RJKgX0sRDDx4DGdjl3fX/questions HTTP/1.1" 200 -
+2026-06-19 11:41:58 [INFO] src.infrastructure.adapters.inbound.middlewares.auth_middleware: Auth exitoso: uid=0uqhtG0lb8U6kpeDERB8isQR0Mh1 endpoint=courses.get_questions_by_course
+2026-06-19 11:41:58 [INFO] src.infrastructure.adapters.inbound.controllers.course_controller: Preguntas del curso RJKgX0sRDDx4DGdjl3fX: 20 encontradas
+2026-06-19 11:41:58 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 11:41:58] "GET /api/courses/RJKgX0sRDDx4DGdjl3fX/questions HTTP/1.1" 200 -
+2026-06-19 11:42:01 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 11:42:01] "OPTIONS /api/questions HTTP/1.1" 200 -
+2026-06-19 11:42:01 [INFO] src.infrastructure.adapters.inbound.middlewares.auth_middleware: Auth exitoso: uid=0uqhtG0lb8U6kpeDERB8isQR0Mh1 endpoint=questions.crear_pregunta
+2026-06-19 11:42:02 [INFO] google_genai.models: AFC is enabled with max remote calls: 10.
+2026-06-19 11:42:13 [INFO] httpx: HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2026-06-19 11:42:13 [INFO] src.infrastructure.adapters.outbound.database.FirestoreRepository: Pregunta creada en Firestore: Lpz9ApNFJPwyvVKdB52m
+2026-06-19 11:42:13 [INFO] src.infrastructure.adapters.inbound.controllers.question_controller: Pregunta creada exitosamente: Lpz9ApNFJPwyvVKdB52m
+2026-06-19 11:42:13 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 11:42:13] "[35m[1mPOST /api/questions HTTP/1.1[0m" 201 -
+2026-06-19 11:42:15 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 11:42:15] "OPTIONS /api/courses/RJKgX0sRDDx4DGdjl3fX/questions HTTP/1.1" 200 -
+2026-06-19 11:42:15 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 11:42:15] "OPTIONS /api/courses/RJKgX0sRDDx4DGdjl3fX/questions HTTP/1.1" 200 -
+2026-06-19 11:42:15 [INFO] src.infrastructure.adapters.inbound.middlewares.auth_middleware: Auth exitoso: uid=0uqhtG0lb8U6kpeDERB8isQR0Mh1 endpoint=courses.get_questions_by_course
+2026-06-19 11:42:15 [INFO] src.infrastructure.adapters.inbound.controllers.course_controller: Preguntas del curso RJKgX0sRDDx4DGdjl3fX: 20 encontradas
+2026-06-19 11:42:15 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 11:42:15] "GET /api/courses/RJKgX0sRDDx4DGdjl3fX/questions HTTP/1.1" 200 -
+2026-06-19 11:42:15 [INFO] src.infrastructure.adapters.inbound.middlewares.auth_middleware: Auth exitoso: uid=0uqhtG0lb8U6kpeDERB8isQR0Mh1 endpoint=courses.get_questions_by_course
+2026-06-19 11:42:16 [INFO] src.infrastructure.adapters.inbound.controllers.course_controller: Preguntas del curso RJKgX0sRDDx4DGdjl3fX: 20 encontradas
+2026-06-19 11:42:16 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 11:42:16] "GET /api/courses/RJKgX0sRDDx4DGdjl3fX/questions HTTP/1.1" 200 -
+2026-06-19 11:42:17 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 11:42:17] "OPTIONS /api/questions/Lpz9ApNFJPwyvVKdB52m HTTP/1.1" 200 -
+2026-06-19 11:42:17 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 11:42:17] "OPTIONS /api/questions/Lpz9ApNFJPwyvVKdB52m HTTP/1.1" 200 -
+2026-06-19 11:42:17 [INFO] src.infrastructure.adapters.inbound.middlewares.auth_middleware: Auth exitoso: uid=0uqhtG0lb8U6kpeDERB8isQR0Mh1 endpoint=questions.obtener_pregunta
+2026-06-19 11:42:18 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 11:42:18] "GET /api/questions/Lpz9ApNFJPwyvVKdB52m HTTP/1.1" 200 -
+2026-06-19 11:42:18 [INFO] src.infrastructure.adapters.inbound.middlewares.auth_middleware: Auth exitoso: uid=0uqhtG0lb8U6kpeDERB8isQR0Mh1 endpoint=questions.obtener_pregunta
+2026-06-19 11:42:19 [INFO] werkzeug: 127.0.0.1 - - [19/Jun/2026 11:42:19] "GET /api/questions/Lpz9ApNFJPwyvVKdB52m HTTP/1.1" 200 -

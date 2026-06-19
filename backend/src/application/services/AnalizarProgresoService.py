@@ -6,5 +6,5 @@ class AnalizarProgresoService:
     def __init__(self):
         self.use_case = AnalizarProgresoUseCase()
 
-    def analizar(self):
-        return self.use_case.execute()
+    def analizar(self, user_id: str = None) -> dict:
+        return self.use_case.execute(user_id=user_id)

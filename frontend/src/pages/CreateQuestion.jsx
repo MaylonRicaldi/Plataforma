@@ -3,95 +3,54 @@ import { useNavigate, useParams } from "react-router-dom";
 
 import api from "../services/api";
 import { auth } from "../app/firebase";
+import { useToast } from "../ToastContext";
 import "./CreateQuestion.css";
 
 
 export default function CreateQuestion() {
 
   const navigate = useNavigate();
+  const toast = useToast();
 
   const { courseId } = useParams();
 
   const [questionText, setQuestionText] = useState("");
-
   const [loading, setLoading] = useState(false);
 
-
-
   const submitQuestion = async (e) => {
-
     e.preventDefault();
-
     if (!questionText.trim()) {
-      alert("Escribe una pregunta");
+      toast("Escribe una pregunta", "warning");
       return;
     }
-
 
     const currentUser = auth.currentUser;
-
     if (!currentUser) {
-      alert("Debes iniciar sesión");
+      toast("Debes iniciar sesión", "error");
       return;
     }
-
 
     setLoading(true);
 
     try {
+      const response = await api.post("/questions", {
+        courseId: courseId,
+        questionText: questionText,
+        userId: currentUser.uid,
+        userName: currentUser.email
+      });
 
-      const response = await api.post(
-        "/questions",
-        {
-          courseId: courseId,
-
-          questionText: questionText,
-
-          userId: currentUser.uid,
-
-          userName: currentUser.email
-        }
-      );
-
-
-      console.log(
-        response.data
-      );
-
-
-      alert(
-        "Pregunta creada y analizada correctamente"
-      );
-
+      toast("Pregunta creada y analizada correctamente", "success");
 
       setTimeout(() => {
-
-        navigate(
-          `/courses/${courseId}/questions`
-        )
-
+        navigate(`/courses/${courseId}/questions`);
       }, 1000);
 
-
-
     } catch (error) {
-
-      console.error(
-        error
-      );
-
-      alert(
-        "No se pudo guardar la pregunta"
-      );
-
-    }
-
-    finally {
-
+      toast("No se pudo guardar la pregunta", "error");
+    } finally {
       setLoading(false);
-
     }
-
   };
 
 

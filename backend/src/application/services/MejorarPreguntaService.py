@@ -6,5 +6,5 @@ class MejorarPreguntaService:
     def __init__(self):
         self.use_case = MejorarPreguntaUseCase()
 
-    def mejorar(self, question_text):
+    def mejorar(self, question_text: str) -> dict:
         return self.use_case.execute(question_text)

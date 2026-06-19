@@ -4,42 +4,64 @@ Plataforma educativa inteligente de aprendizaje basado en preguntas. Permite a e
 
 ## Stack
 
-- **Backend:** Python 3.12 + Flask (Clean Architecture / Hexagonal)
-- **Frontend:** React 19 + Vite 8 (JSX)
-- **Base de datos:** Firebase Firestore
-- **Autenticación:** Firebase Authentication
-- **IA:** Google Gemini 2.5 Flash + motor local de Taxonomía de Bloom
-- **Testing:** pytest, Cypress, Selenium, MLflow
+* **Backend:** Python 3.12 + Flask (Arquitectura Hexagonal)
+* **Frontend:** React 19 + Vite 8 (JSX)
+* **Base de datos:** Firebase Firestore
+* **Autenticación:** Firebase Authentication
+* **IA:** Google Gemini 2.5 Flash + motor local de Taxonomía de Bloom
+* **Testing:** pytest
+* **CI/CD:** GitHub Actions
 
 ## Estructura del proyecto
 
-```
-backend/src/               # Código fuente backend
-  application/             # Casos de uso y servicios
-  domain/                  # Entidades y puertos (interfaces)
-  infrastructure/          # Adaptadores (controladores, DB, AI)
-  config/                  # Configuración (Firebase)
-  main.py                  # Punto de entrada Flask
+```text
+backend/
+├── logs/                          # Logs de la aplicación
+├── mlflow.db                      # Base de datos MLflow
+├── requirements.txt               # Dependencias Python
+└── src/
+    ├── application/               # Casos de uso y servicios
+    │   ├── services/              # Servicios de aplicación
+    │   └── use_cases/             # Casos de uso
+    ├── config/                    # Configuración
+    ├── domain/                    # Capa de dominio
+    │   ├── entities/              # Entidades
+    │   ├── enums/                 # Enumeraciones
+    │   └── ports/                 # Interfaces (puertos)
+    ├── infrastructure/            # Adaptadores
+    │   ├── adapters/
+    │   │   ├── inbound/           # Controladores HTTP
+    │   │   └── outbound/          # Firestore, Gemini, etc.
+    │   └── config/                # Configuración Firebase
+    ├── routes/                    # Definición de rutas
+    └── main.py                    # Punto de entrada Flask
 
-frontend/src/              # Código fuente frontend
-  pages/                   # Componentes de página
-  services/                # Cliente API (Axios)
-  app/                     # Configuración Firebase
+frontend/
+├── public/                        # Archivos estáticos
+└── src/
+    ├── app/                       # Configuración Firebase
+    ├── assets/                    # Recursos estáticos
+    ├── pages/                     # Componentes de página
+    ├── services/                  # Cliente API (Axios)
+    ├── App.jsx                    # Componente principal
+    ├── ErrorBoundary.jsx          # Manejo de errores
+    ├── Layout.jsx                 # Layout principal
+    ├── Spinner.jsx                # Indicador de carga
+    ├── ToastContext.jsx           # Notificaciones
+    ├── index.css                  # Estilos globales
+    └── main.jsx                   # Punto de entrada React
 
-tests/                     # Pruebas
-  backend/                 # pytest (unitarias + integración)
-  selenium/                # Pruebas de interfaz
-  cypress/                 # Pruebas E2E
-  ml/                      # Evaluación del motor Bloom
-  postman/                 # Colección de API
+.github/
+└── workflows/
+    └── ci.yml                     # Pipeline CI/CD
 ```
 
 ## Requisitos
 
-- Python 3.12+
-- Node.js 20+
-- Firebase project con Firestore y Authentication habilitados
-- API key de Google Gemini (opcional — el motor Bloom local funciona sin ella)
+* **Python:** 3.12+
+* **Node.js:** 20+
+* **Firebase:** Firestore y Authentication habilitados.
+* **Google Gemini API Key:** Opcional (el motor Bloom local funciona sin ella).
 
 ## Configuración
 
@@ -47,71 +69,95 @@ tests/                     # Pruebas
 
 ```bash
 cd backend
+
 cp .env.example .env
-# Editar .env con:
-# - GEMINI_API_KEY: tu clave de Gemini (o dejar vacío para usar solo Bloom local)
-# - GOOGLE_APPLICATION_CREDENTIALS: ruta a serviceAccountKey.json de Firebase
+
+# Configurar:
+# GEMINI_API_KEY=tu_clave_de_gemini
+# GOOGLE_APPLICATION_CREDENTIALS=ruta/serviceAccountKey.json
 
 python -m venv venv
-.\venv\Scripts\activate   # Windows
+
+# Windows
+.\venv\Scripts\activate
+
 pip install -r requirements.txt
 
 python src/main.py
-# Servidor en http://localhost:5000
+```
+
+Servidor:
+
+```text
+http://localhost:5000
 ```
 
 ### Frontend
 
 ```bash
 cd frontend
+
 cp .env.example .env
+
 npm install
+
 npm run dev
-# Servidor en http://localhost:5173
 ```
 
-### Variables de entorno
+Servidor:
 
-Ver `.env.example` en `backend/` y `frontend/` para la lista completa.
+```text
+http://localhost:5173
+```
 
-## APIs
+## Variables de entorno
+
+Consultar los archivos:
+
+* `backend/.env.example`
+* `frontend/.env.example`
+
+## API REST
 
 ### Endpoints principales
 
-| Método | Ruta | Auth | Descripción |
-|--------|------|------|-------------|
-| POST | /api/auth/register | No | Registrar usuario |
-| GET | /api/auth/me | Sí | Perfil del usuario actual |
-| GET | /api/courses | Sí | Listar cursos |
-| GET | /api/courses/:id/questions | Sí | Preguntas por curso |
-| POST | /api/questions | Sí | Crear pregunta (con IA) |
-| GET | /api/questions/:id | No | Detalle de pregunta |
-| PUT | /api/questions/:id | Sí | Editar pregunta |
-| DELETE | /api/questions/:id | Sí | Eliminar pregunta |
-| POST | /api/ai/improve-question | Sí | Previsualizar mejora IA |
-| GET | /api/progress | Sí | Progreso del usuario |
-| GET | /health | No | Health check |
+| Método | Ruta                         | Auth | Descripción                 |
+| ------ | ---------------------------- | ---- | --------------------------- |
+| POST   | `/api/auth/register`         | No   | Registrar usuario           |
+| GET    | `/api/auth/me`               | Sí   | Perfil del usuario actual   |
+| GET    | `/api/courses`               | Sí   | Listar cursos               |
+| GET    | `/api/courses/:id/questions` | Sí   | Preguntas por curso         |
+| POST   | `/api/questions`             | Sí   | Crear pregunta con IA       |
+| GET    | `/api/questions/:id`         | No   | Obtener detalle de pregunta |
+| PUT    | `/api/questions/:id`         | Sí   | Editar pregunta             |
+| DELETE | `/api/questions/:id`         | Sí   | Eliminar pregunta           |
+| POST   | `/api/ai/improve-question`   | Sí   | Previsualizar mejora con IA |
+| GET    | `/api/progress`              | Sí   | Progreso del usuario        |
+| GET    | `/health`                    | No   | Estado del servidor         |
 
 ## Pruebas
 
+### Ejecutar pruebas backend
+
 ```bash
-# Backend (pytest)
-cd tests/backend
+cd backend
+
 pytest -v
+```
 
-# Frontend (Cypress E2E)
-cd frontend
-npx cypress run
+### Cobertura
 
-# Cobertura
-pytest --cov=src tests/backend/
+```bash
+pytest --cov=src
 ```
 
 ## Arquitectura
 
-El backend sigue una arquitectura hexagonal (puertos y adaptadores):
+El backend implementa una **Arquitectura Hexagonal (Ports & Adapters)**.
 
-- **Controladores** (inbound adapters): manejan requests HTTP
-- **Casos de uso** (application): contienen la lógica de negocio
-- **Puertos** (domain): interfaces para repositorios y servicios externos
-- **Adaptadores** (outbound): implementan los puertos (Firestore, Gemini, etc.)
+### Componentes principales
+
+* **Controladores (Inbound Adapters):** reciben y procesan solicitudes HTTP.
+* **Casos de uso (Application):** contienen la lógica de negocio.
+* **Puertos (Domain):** definen interfaces para repositorios y servicios externos.
+* **Adaptadores (Outbound Adapters):** implementan la comunicación con Firestore, Gemini y otros servicios.

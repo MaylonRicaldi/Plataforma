@@ -1,7 +1,10 @@
 import os
+import sys
 import logging
 from logging.handlers import RotatingFileHandler
 from datetime import datetime, timezone
+
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from flask import Flask, jsonify
 from flask_cors import CORS

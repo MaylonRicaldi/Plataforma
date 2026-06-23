@@ -16,11 +16,18 @@ logging.basicConfig(
     datefmt="%Y-%m-%d %H:%M:%S",
 )
 
+logger = logging.getLogger(__name__)
+
 from src.infrastructure.adapters.inbound.controllers.auth_controller     import router as auth_router
 from src.infrastructure.adapters.inbound.controllers.course_controller   import router as course_router
 from src.infrastructure.adapters.inbound.controllers.question_controller import router as question_router
 from src.infrastructure.adapters.inbound.controllers.ai_controller       import router as ai_router
 from src.infrastructure.adapters.inbound.controllers.progress_controller import router as progress_router
+
+from src.infrastructure.config.di_container import container
+from src.infrastructure.adapters.outbound.database.FirestoreRepository import FirestoreRepository
+from src.infrastructure.adapters.outbound.ai.NLPServiceAdapter import NLPServiceAdapter
+from src.infrastructure.adapters.outbound.analytics.AnalyticsAdapter import AnalyticsAdapter
 
 
 
@@ -60,15 +67,26 @@ def create_app() -> Flask:
         response.headers["X-XSS-Protection"] = "0"
         return response
 
-    allowed_origins = os.getenv("CORS_ORIGINS", "http://localhost:5173,http://127.0.0.1:5173,http://localhost:3000").split(",")
+    allowed_origins = os.getenv("CORS_ORIGINS", "http://localhost:5173,http://127.0.0.1:5173").split(",")
     CORS(app, resources={r"/api/*": {"origins": allowed_origins}})
 
+    repo = FirestoreRepository()
+    nlp = NLPServiceAdapter()
+    analytics = AnalyticsAdapter()
+    container.init_app(repository=repo, nlp_service=nlp, analytics=analytics)
+    logger.info("Dependencias registradas en el contenedor DI")
+
+    redis_url = os.getenv("REDIS_URL")
     limiter = Limiter(
         get_remote_address,
         app=app,
         default_limits=["1000 per day", "200 per hour"],
-        storage_uri="memory://",
+        storage_uri=redis_url or "memory://",
     )
+    if redis_url:
+        logger.info("Rate limiter usando Redis: %s", redis_url)
+    else:
+        logger.info("Rate limiter usando memoria (no persiste entre reinicios)")
 
     if os.getenv("FLASK_ENV", "development") != "production":
         Swagger(app, template={
@@ -100,6 +118,7 @@ def create_app() -> Flask:
     limiter.limit("30 per minute")(question_router)
     limiter.limit("30 per minute")(ai_router)
     limiter.limit("10 per minute")(auth_router)
+    limiter.limit("60 per minute")(course_router)
 
     # === MANEJADORES GLOBALES DE ERRORES ===
     @app.errorhandler(BadRequest)
@@ -164,4 +183,4 @@ if __name__ == "__main__":
     port = int(os.getenv("PORT", 5000))
     debug = os.getenv("FLASK_DEBUG", "0") == "1"
     app  = create_app()
-    app.run(debug=debug, port=port)
+    app.run(debug=debug, host="0.0.0.0", port=port)
